@@ -13,6 +13,7 @@
 
 #include "utils/image.h"
 #include "utils/point.h"
+#include "utils/ray.h"
 #include "utils/vector.h"
 
 int main() {
@@ -43,5 +44,11 @@ int main() {
   */
 
   Point point = Point(42, 42, 42);
-  std::cout << "Point: " << point;
+  std::cout << "Point: " << point << "\n";
+
+  Vector vector = Vector(1, 0, 0);
+  std::cout << "Vector: " << vector << "\n";
+
+  Ray ray = Ray(point, vector);
+  std::cout << "Ray: " << ray << "\n";
 }

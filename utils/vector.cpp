@@ -57,6 +57,11 @@ Vector Vector::normalize(const Vector &vector) const {
 }
 
 std::ostream &operator<<(std::ostream &os, Vector &vector) {
-  os << "(" << vector.x << ", " << vector.y << ", " << vector.z << ")\n";
+  os << "(" << vector.x << ", " << vector.y << ", " << vector.z << ")";
+  return os;
+}
+
+std::ostream &operator<<(std::ostream &os, const Vector &vector) {
+  os << "(" << vector.x << ", " << vector.y << ", " << vector.z << ")";
   return os;
 }

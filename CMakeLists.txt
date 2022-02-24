@@ -9,6 +9,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 set(SRCS
     main.cpp
     utils/image.cpp
+    utils/ray.cpp
     utils/vector.cpp
     )
     
@@ -16,6 +17,7 @@ set(HEADERS
     utils/color.h 
     utils/image.h 
     utils/point.h 
+    utils/ray.h
     utils/vector.h
     )
 

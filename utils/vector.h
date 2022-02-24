@@ -31,6 +31,7 @@ class Vector {
   Vector normalize(const Vector &vector) const;
 
   friend std::ostream &operator<<(std::ostream &os, Vector &vector);
+  friend std::ostream &operator<<(std::ostream &os, const Vector &vector);
 
   double x;
   double y;
