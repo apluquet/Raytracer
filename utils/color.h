@@ -19,12 +19,6 @@ class Color {
   Color(size_t red, size_t green, size_t blue)
       : red(red), green(green), blue(blue) {}
 
-  /*
-  uint8_t red;
-  uint8_t green;
-  uint8_t blue;
-  */
-
   size_t red;
   size_t green;
   size_t blue;
