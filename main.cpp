@@ -19,11 +19,10 @@
 int main() {
   std::cout << "Hello World" << std::endl;
 
-  /* Image tests
+  // Image tests
 
-  Image my_image(500, 400);
+  Image my_image(5, 4);
   my_image.to_ppm();
-  */
 
   /* Vector tests
 
@@ -43,6 +42,8 @@ int main() {
   std::cout << v5;
   */
 
+  /* Ray tests
+
   Point point = Point(42, 42, 42);
   std::cout << "Point: " << point << "\n";
 
@@ -51,4 +52,5 @@ int main() {
 
   Ray ray = Ray(point, vector);
   std::cout << "Ray: " << ray << "\n";
+  */
 }
