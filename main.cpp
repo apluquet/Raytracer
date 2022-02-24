@@ -12,13 +12,19 @@
 #include <iostream>
 
 #include "utils/image.h"
+#include "utils/point.h"
 #include "utils/vector.h"
 
 int main() {
   std::cout << "Hello World" << std::endl;
 
-  // Image my_image(500, 400);
-  // my_image.to_ppm();
+  /* Image tests
+
+  Image my_image(500, 400);
+  my_image.to_ppm();
+  */
+
+  /* Vector tests
 
   Vector v1 = Vector(1, 2, 3);
   std::cout << v1;
@@ -34,4 +40,8 @@ int main() {
 
   Vector v5 = v1 ^ v4;
   std::cout << v5;
+  */
+
+  Point point = Point(42, 42, 42);
+  std::cout << "Point: " << point;
 }
