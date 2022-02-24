@@ -12,10 +12,26 @@
 #include <iostream>
 
 #include "utils/image.h"
+#include "utils/vector.h"
 
 int main() {
   std::cout << "Hello World" << std::endl;
 
-  Image my_image(500, 400);
-  my_image.to_ppm();
+  // Image my_image(500, 400);
+  // my_image.to_ppm();
+
+  Vector v1 = Vector(1, 2, 3);
+  std::cout << v1;
+
+  Vector v2 = v1 * 2;
+  std::cout << v2;
+
+  Vector v3 = v1 ^ v2;
+  std::cout << v3;
+
+  Vector v4 = v2 + Vector(0, 1, 0);
+  std::cout << v4;
+
+  Vector v5 = v1 ^ v4;
+  std::cout << v5;
 }

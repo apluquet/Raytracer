@@ -3,10 +3,13 @@ cmake_minimum_required(VERSION 3.0)
 # Notre projet est étiqueté hello
 project(raytracer)
 
+include_directories(${CMAKE_SOURCE_DIR})
+
 # Crée des variables avec les fichiers à compiler
 set(SRCS
     main.cpp
     utils/image.cpp
+    utils/vector.cpp
     )
     
 set(HEADERS
