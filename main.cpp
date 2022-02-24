@@ -12,7 +12,6 @@
 #include <iostream>
 
 #include "utils/image.h"
-#include "utils/vector.h"
 
 int main() {
   std::cout << "Hello World" << std::endl;
