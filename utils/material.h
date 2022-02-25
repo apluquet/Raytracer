@@ -15,6 +15,7 @@
 #include <stdint.h>
 
 #include "utils/color.h"
+#include "utils/point.h"
 
 /*
  * Add an abstract class for Texture_Material with (at least) one pure
@@ -32,26 +33,34 @@
  * @brief Abstract material class.
  *
  */
+
 class Texture_Material {
  public:
-  Texture_Material(const double &kd, const double &ks) : kd(kd), ks(ks) {}
-
-  virtual Color get(const Point &point) const;
-
-  double kd;
-  double ks;
+  virtual Color get(const Point &point) { return Color(0, 0, 0); }
 };
 
 class Uniform_Texture : public Texture_Material {
  public:
-  Color get(const Point &point) {
-    size_t Ir = kd;
-    size_t Ig = kd;
-    size_t Ib = kd;
-
-    Color color(Ir, Ig, Ib);
-    return color;
-  }
+  Uniform_Texture(const double &a, const double &b) {}
+  Color get(const Point &point) { return Color(1, 1, 1); }
 };
+/*
+class Texture_Material {
+ public:
+  Texture_Material();
+
+  virtual Color get(const Point &point);
+};
+
+
+class Uniform_Texture { //: public Texture_Material {
+ public:
+  Uniform_Texture(const double &kd, const double &ks) : kd(kd), ks(ks) {}
+
+  Color get(const Point &point);
+
+  double kd;
+  double ks;
+};*/
 
 #endif  // UTILS_MATERIAL_H_

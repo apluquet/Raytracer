@@ -12,7 +12,7 @@
 #ifndef UTILS_COLOR_H_
 #define UTILS_COLOR_H_
 
-#include <stdint.h>
+#include <cstddef>
 
 class Color {
  public:

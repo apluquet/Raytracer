@@ -23,11 +23,9 @@ class Scene {
 
   void addObject(Object object);
   void addLight(Light light);
-  void addCamera(Camera camera);
 
-  void deleteObject(Object object);
-  void deleteLight(Light light);
-  void deleteCamera(Camera camera);
+  // void deleteObject(Object object);
+  // void deleteLight(Light light);
 
   std::list<Object> objects;
   std::list<Light> lights;

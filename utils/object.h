@@ -12,10 +12,11 @@
 #ifndef UTILS_OBJECT_H_
 #define UTILS_OBJECT_H_
 
+#include <optional>
+
 #include "utils/material.h"
 #include "utils/ray.h"
 #include "utils/vector.h"
-
 /*
  * Implement an abstract class to manage objects. This class embed a Texture
  * Material and must held at least the 3 following pure virtual methods:
@@ -33,11 +34,11 @@
 // Abstract object class
 class Object {
  public:
-  Object();
-
-  virtual Point intersect(const Ray &ray) const;
-  virtual Vector normal(const Point &point) const;
-  virtual Color get_texture(const Point &point) const;
+  virtual std::optional<Point> intersect(const Ray &ray) {
+    return Point(0, 0, 0);
+  }
+  virtual Vector normal(const Point &point) { return Vector(42, 42, 42); }
+  virtual Color get_texture(const Point &point) { return Color(1, 2, 3); }
 
   Texture_Material material;
 };

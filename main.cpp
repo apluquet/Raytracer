@@ -12,6 +12,7 @@
 #include <iostream>
 
 #include "utils/image.h"
+#include "utils/objects/sphere.h"
 #include "utils/point.h"
 #include "utils/ray.h"
 #include "utils/vector.h"
@@ -19,10 +20,11 @@
 int main() {
   std::cout << "Hello World" << std::endl;
 
-  // Image tests
+  /* Image tests
 
   Image my_image(5, 4);
   my_image.to_ppm();
+  */
 
   /* Vector tests
 
@@ -53,4 +55,29 @@ int main() {
   Ray ray = Ray(point, vector);
   std::cout << "Ray: " << ray << "\n";
   */
+  Point center = Point(10, 0, 0);
+  double radius = 4.2;
+  Texture_Material material = Uniform_Texture(42, 42);
+  Sphere sphere = Sphere(center, radius, material);
+
+  int size = 1000;
+  Image image(size, size);
+  double step = 5. * 2 / size;
+
+  for (int i = 0; i < image.height; i++)
+    for (int j = 0; j < image.width; j++) {
+      Point origin(0, (-size / 2 + j) * step, (-size / 2 + i) * step);
+      Vector direction(1, 0, 0);
+      Ray ray(origin, direction);
+
+      std::optional<Point> intersection = sphere.intersect(ray);
+
+      if (!intersection.has_value()) continue;
+
+      Color color = sphere.get_texture(intersection.value());
+
+      image.my_image[i][j] = color;
+    }
+
+  image.to_ppm();
 }
