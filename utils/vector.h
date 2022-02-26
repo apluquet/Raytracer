@@ -18,6 +18,7 @@
 
 class Vector {
  public:
+  Vector() {}
   Vector(const double &x, const double &y, const double &z)
       : x(x), y(y), z(z) {}
 
@@ -28,6 +29,7 @@ class Vector {
   Vector operator-(const Vector &other) const;
   Vector operator+(const Vector &other) const;
   double length() const;
+  Vector negative() const;
   Vector normalize() const;
 
   friend std::ostream &operator<<(std::ostream &os, Vector &vector);

@@ -52,6 +52,8 @@ Vector Vector::operator+(const Vector &other) const {
 
 double Vector::length() const { return sqrt(x * x + y * y + z * z); }
 
+Vector Vector::negative() const { return Vector(-x, -y, -z); }
+
 Vector Vector::normalize() const { return *this / this->length(); }
 
 std::ostream &operator<<(std::ostream &os, Vector &vector) {
