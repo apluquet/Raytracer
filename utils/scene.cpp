@@ -12,7 +12,7 @@
 #include "utils/scene.h"
 
 void Scene::addObject(Object *object) { objects.push_back(object); }
-void Scene::addLight(Light light) { lights.push_back(light); }
+void Scene::addLight(const Light &light) { lights.push_back(light); }
 
 // void Scene::deleteObject(Object object) { objects.remove(object); }
 // void Scene::deleteLight(Light light) { lights.remove(light); }

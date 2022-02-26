@@ -19,10 +19,11 @@
 #include "utils/object.h"
 
 class Scene {
-  explicit Scene(Camera camera) : camera(camera) {}
+ public:
+  explicit Scene(const Camera &camera) : camera(camera) {}
 
   void addObject(Object *object);
-  void addLight(Light light);
+  void addLight(const Light &light);
 
   // void deleteObject(Object object);
   // void deleteLight(Light light);
