@@ -37,23 +37,22 @@ int main() {
   Sphere sphere2 = Sphere(sphere2_center, sphere2_radius, &material_sth);
 
   // Our image parameter
-  int size = 1000;
-  Image image(size, size);
+  Image image(1200, 675);
 
   // Camera definition
   Point position(0, -10, 10);
   Vector direction = Vector(0, 0, 0) - position;
   Vector up = Vector(0, position.y, 0) ^ direction;
-  Camera camera(position, direction, up, 1, 90, 90, image);
+  Camera camera(position, direction, up, 1, 120, 90, image);
   Scene scene(camera);
   scene.addObject(&sphere2);
   scene.addObject(&sphere);
 
   Ray ray;
   std::optional<Point> intersection;
-  for (int i = 0; i < image.width; i++)
-    for (int j = 0; j < image.height; j++) {
-      ray = camera.cast_ray(i, j);
+  for (int i = 0; i < image.height; i++)
+    for (int j = 0; j < image.width; j++) {
+      ray = camera.cast_ray(j, i);
 
       double distance = INFINITY;
       Color color(0, 0, 0);
