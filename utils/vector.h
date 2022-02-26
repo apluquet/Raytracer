@@ -28,7 +28,7 @@ class Vector {
   Vector operator-(const Vector &other) const;
   Vector operator+(const Vector &other) const;
   double length() const;
-  Vector normalize(const Vector &vector) const;
+  Vector normalize() const;
 
   friend std::ostream &operator<<(std::ostream &os, Vector &vector);
   friend std::ostream &operator<<(std::ostream &os, const Vector &vector);
