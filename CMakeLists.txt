@@ -17,10 +17,12 @@ set(SRCS
     utils/ray.cpp
     utils/scene.cpp
     utils/vector.cpp
+    utils/camera.cpp
     )
     
 set(HEADERS
     utils/camera.h
+    utils/scene.h
     utils/color.h 
     utils/image.h 
     utils/light.h
