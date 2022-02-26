@@ -41,27 +41,11 @@ class Texture_Material {
 
 class Uniform_Texture : public Texture_Material {
  public:
-  Uniform_Texture(const double &a, const double &b) {}
+  explicit Uniform_Texture(const Color &color) : color(color) {}
 
-  Color get(const Point &point) { return Color(1, 1, 1); }
+  Color get(const Point &point) { return color; }
+
+  Color color;
 };
-/*
-class Texture_Material {
- public:
-  Texture_Material();
-
-  virtual Color get(const Point &point);
-};
-
-
-class Uniform_Texture { //: public Texture_Material {
- public:
-  Uniform_Texture(const double &kd, const double &ks) : kd(kd), ks(ks) {}
-
-  Color get(const Point &point);
-
-  double kd;
-  double ks;
-};*/
 
 #endif  // UTILS_MATERIAL_H_
