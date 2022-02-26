@@ -21,12 +21,10 @@
 class Image {
  public:
   Image(std::size_t width, std::size_t height) : height(height), width(width) {
-    Color black = Color(50, 20, 250);
-    Color red = Color(175, 0, 40);
+    Color white = Color(255, 255, 255);
     for (std::size_t i = 0; i < height; i++) {
       std::vector<Color> line;
-      for (std::size_t j = 0; j < width; j++)
-        ((j + i) % 2 == 0) ? line.push_back(black) : line.push_back(red);
+      for (std::size_t j = 0; j < width; j++) line.push_back(white);
       my_image.push_back(line);
     }
   }
