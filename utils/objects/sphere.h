@@ -20,8 +20,7 @@
 
 class Sphere : public Object {
  public:
-  Sphere(const Point &center, const double &radius,
-         const Texture_Material &material)
+  Sphere(const Point &center, const double &radius, Texture_Material *material)
       : center(center), radius(radius), material(material) {}
 
   std::optional<Point> intersect(const Ray &ray) override;
@@ -30,7 +29,7 @@ class Sphere : public Object {
 
   Point center;
   double radius;
-  Texture_Material material;
+  Texture_Material *material;
 };
 
 #endif  // UTILS_OBJECTS_SPHERE_H_

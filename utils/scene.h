@@ -21,13 +21,13 @@
 class Scene {
   explicit Scene(Camera camera) : camera(camera) {}
 
-  void addObject(Object object);
+  void addObject(Object *object);
   void addLight(Light light);
 
   // void deleteObject(Object object);
   // void deleteLight(Light light);
 
-  std::list<Object> objects;
+  std::list<Object *> objects;
   std::list<Light> lights;
   Camera camera;
 };

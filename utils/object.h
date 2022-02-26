@@ -34,13 +34,11 @@
 // Abstract object class
 class Object {
  public:
-  virtual std::optional<Point> intersect(const Ray &ray) {
-    return Point(0, 0, 0);
-  }
-  virtual Vector normal(const Point &point) { return Vector(42, 42, 42); }
-  virtual Color get_texture(const Point &point) { return Color(1, 2, 3); }
+  virtual std::optional<Point> intersect(const Ray &ray) = 0;
+  virtual Vector normal(const Point &point) = 0;
+  virtual Color get_texture(const Point &point) = 0;
 
-  Texture_Material material;
+  Texture_Material *material;
 };
 
 #endif  // UTILS_OBJECT_H_

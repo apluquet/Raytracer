@@ -36,12 +36,13 @@
 
 class Texture_Material {
  public:
-  virtual Color get(const Point &point) { return Color(0, 0, 0); }
+  virtual Color get(const Point &point) = 0;
 };
 
 class Uniform_Texture : public Texture_Material {
  public:
   Uniform_Texture(const double &a, const double &b) {}
+
   Color get(const Point &point) { return Color(1, 1, 1); }
 };
 /*

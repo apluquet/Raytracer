@@ -57,8 +57,8 @@ int main() {
   */
   Point center = Point(10, 0, 0);
   double radius = 4.2;
-  Texture_Material material = Uniform_Texture(42, 42);
-  Sphere sphere = Sphere(center, radius, material);
+  Uniform_Texture material = Uniform_Texture(42, 42);
+  Sphere sphere = Sphere(center, radius, &material);
 
   int size = 1000;
   Image image(size, size);
