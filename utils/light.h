@@ -12,6 +12,19 @@
 #ifndef UTILS_LIGHT_H_
 #define UTILS_LIGHT_H_
 
+#include "utils/color.h"
+#include "utils/point.h"
+
 class Light {};
+
+class PointLight : public Light {
+ public:
+  PointLight(const Point &position, const Color &color, const double &intensity)
+      : position(position), color(color), intensity(intensity) {}
+
+  Point position;
+  Color color;
+  double intensity;
+};
 
 #endif  // UTILS_LIGHT_H_
