@@ -31,6 +31,7 @@ class Image {
 
   // Enregistre l'image au format ppm
   void to_ppm();
+  std::vector<uint8_t> to_rgba_vector();
 
   std::size_t height;
   std::size_t width;

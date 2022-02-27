@@ -21,8 +21,8 @@ set(SRCS
     )
     
 set(HEADERS
+    gif-h/gif.h
     utils/camera.h
-    utils/scene.h
     utils/color.h 
     utils/image.h 
     utils/light.h
@@ -31,8 +31,9 @@ set(HEADERS
     utils/objects/sphere.h
     utils/point.h 
     utils/ray.h
+    utils/scene.h
     utils/vector.h
     )
 
-add_compile_options(-g)
+add_compile_options(-O3)
 add_executable(raytracer ${SRCS} ${HEADERS})
