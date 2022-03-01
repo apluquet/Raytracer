@@ -14,7 +14,7 @@
 // https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
 // Sphere : dot((P - C), (P - C)) = r²
 // Ray : p(t) = O + tD
-std::optional<Point> Sphere::intersect(const Ray &ray) {
+std::optional<Intersection> Sphere::intersect(const Ray &ray) {
   Vector diff = ray.origin - center;
   double a = ray.direction * ray.direction;
   double b = ray.direction * 2 * diff;
@@ -28,7 +28,10 @@ std::optional<Point> Sphere::intersect(const Ray &ray) {
 
   if (t < 0) t = -b + sqrt_discriminant / 2 * a;
 
-  Point intersection = ray.origin + ray.direction * t;
+  Point intersection_point = ray.origin + ray.direction * t;
+
+  Intersection intersection(ray, intersection_point,
+                            normal(intersection_point));
 
   return intersection;
 }

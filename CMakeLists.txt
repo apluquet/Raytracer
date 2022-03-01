@@ -25,6 +25,7 @@ set(HEADERS
     utils/camera.h
     utils/color.h 
     utils/image.h 
+    utils/intersection.h
     utils/light.h
     utils/material.h
     utils/materials/phong.h

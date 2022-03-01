@@ -13,6 +13,7 @@
 #include <optional>
 
 #include "utils/color.h"
+#include "utils/intersection.h"
 #include "utils/material.h"
 #include "utils/ray.h"
 #include "utils/scene.h"
@@ -38,7 +39,7 @@ class Texture_Material;
 // Abstract object class
 class Object {
  public:
-  virtual std::optional<Point> intersect(const Ray &ray) = 0;
+  virtual std::optional<Intersection> intersect(const Ray &ray) = 0;
   virtual Vector normal(const Point &point) = 0;
   virtual Color get_texture(const Point &point, const Ray &ray,
                             const Scene &scene) = 0;

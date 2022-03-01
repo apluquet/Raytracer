@@ -22,7 +22,7 @@ class Sphere : public Object {
   Sphere(const Point &center, const double &radius, Texture_Material *material)
       : center(center), radius(radius), material(material) {}
 
-  std::optional<Point> intersect(const Ray &ray) override;
+  std::optional<Intersection> intersect(const Ray &ray) override;
   Vector normal(const Point &point) override;
   Color get_texture(const Point &point, const Ray &ray,
                     const Scene &scene) override;

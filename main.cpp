@@ -60,7 +60,7 @@ int main() {
   scene.addLight(&light);
 
   Ray ray;
-  std::optional<Point> intersection;
+  std::optional<Intersection> intersection;
   for (int i = 0; i < image.height; i++)
     for (int j = 0; j < image.width; j++) {
       ray = camera.cast_ray(j, i);
@@ -72,11 +72,12 @@ int main() {
         intersection = object->intersect(ray);
         if (!intersection.has_value()) continue;
 
-        double new_distance = (intersection.value() - ray.origin).length();
+        double new_distance =
+            (intersection.value().point - ray.origin).length();
 
         if (new_distance < distance) {
           distance = new_distance;
-          color = object->get_texture(intersection.value(), ray, scene);
+          color = object->get_texture(intersection.value().point, ray, scene);
         }
       }
 
