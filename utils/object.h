@@ -12,9 +12,12 @@
 
 #include <optional>
 
+#include "utils/color.h"
 #include "utils/material.h"
 #include "utils/ray.h"
+#include "utils/scene.h"
 #include "utils/vector.h"
+
 /*
  * Implement an abstract class to manage objects. This class embed a Texture
  * Material and must held at least the 3 following pure virtual methods:
@@ -29,12 +32,16 @@
  * implementation of (at least) the 3 previous methods.
  */
 
+class Scene;
+class Texture_Material;
+
 // Abstract object class
 class Object {
  public:
   virtual std::optional<Point> intersect(const Ray &ray) = 0;
   virtual Vector normal(const Point &point) = 0;
-  virtual Color get_texture(const Point &point) = 0;
+  virtual Color get_texture(const Point &point, const Ray &ray,
+                            const Scene &scene) = 0;
 
   Texture_Material *material;
 };

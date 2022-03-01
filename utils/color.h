@@ -17,6 +17,14 @@ class Color {
   Color(size_t red, size_t green, size_t blue)
       : red(red), green(green), blue(blue) {}
 
+  Color operator+(const Color &other) const {
+    return Color(red + other.red, blue + other.blue, green + other.green);
+  }
+
+  Color operator*(const double &value) const {
+    return Color(red * value, blue * value, green * value);
+  }
+
   size_t red;
   size_t green;
   size_t blue;

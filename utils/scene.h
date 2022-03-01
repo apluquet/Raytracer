@@ -16,17 +16,22 @@
 #include "utils/light.h"
 #include "utils/object.h"
 
+class Object;
+class Texture_Material;
+
 class Scene {
  public:
-  explicit Scene(const Camera &camera) : camera(camera) {}
+  explicit Scene(const Camera &camera, const double &ambientIntensity)
+      : camera(camera), ambientIntensity(ambientIntensity) {}
 
   void addObject(Object *object);
-  void addLight(const Light &light);
+  void addLight(Light *light);
 
   // void deleteObject(Object object);
   // void deleteLight(Light light);
 
   std::list<Object *> objects;
-  std::list<Light> lights;
+  std::list<Light *> lights;
+  double ambientIntensity;  // [0,1]
   Camera camera;
 };

@@ -11,11 +11,7 @@
 
 #include "utils/material.h"
 
-Color Uniform_Texture::get(const Point &point) {
-  size_t Ir = kd;
-  size_t Ig = kd;
-  size_t Ib = kd;
-
-  Color color(Ir, Ig, Ib);
+Color Uniform_Texture::get(const Point &point, const Ray &ray,
+                           const Scene &scene) {
   return color;
 }

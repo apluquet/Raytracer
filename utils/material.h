@@ -14,6 +14,7 @@
 
 #include "utils/color.h"
 #include "utils/point.h"
+#include "utils/scene.h"
 
 /*
  * Add an abstract class for Texture_Material with (at least) one pure
@@ -32,16 +33,28 @@
  *
  */
 
+class Scene;
+
 class Texture_Material {
  public:
-  virtual Color get(const Point &point) = 0;
+  /**
+   * @brief
+   *
+   * @param point : The point of the material for which to compute
+   * @param ray : The ray that touched the point and asked for the texture.
+   * @param scene : The scene object containing every object and light.
+   * @return Color
+   */
+  virtual Color get(const Point &point, const Ray &ray, const Scene &scene) = 0;
 };
 
 class Uniform_Texture : public Texture_Material {
  public:
   explicit Uniform_Texture(const Color &color) : color(color) {}
 
-  Color get(const Point &point) { return color; }
+  Color get(const Point &point, const Ray &ray, const Scene &scene) {
+    return color;
+  }
 
   Color color;
 };

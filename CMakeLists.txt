@@ -12,25 +12,27 @@ include_directories(${CMAKE_SOURCE_DIR})
 # Crée des variables avec les fichiers à compiler
 set(SRCS
     main.cpp
+    utils/camera.cpp
     utils/image.cpp
+    utils/materials/phong.cpp
     utils/objects/sphere.cpp 
     utils/ray.cpp
     utils/scene.cpp
     utils/vector.cpp
-    utils/camera.cpp
     )
     
 set(HEADERS
     utils/camera.h
-    utils/scene.h
     utils/color.h 
     utils/image.h 
     utils/light.h
     utils/material.h
+    utils/materials/phong.h
     utils/object.h
     utils/objects/sphere.h
     utils/point.h 
     utils/ray.h
+    utils/scene.h
     utils/vector.h
     )
 

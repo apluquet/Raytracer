@@ -12,6 +12,7 @@
 #include <iostream>
 
 #include "utils/image.h"
+#include "utils/materials/phong.h"
 #include "utils/objects/sphere.h"
 #include "utils/point.h"
 #include "utils/ray.h"
@@ -21,8 +22,12 @@
 int main() {
   std::cout << "Hello World" << std::endl;
 
+  // Our image parameter
+  Image image(1200, 675);
+
+  // Create materials
   Color pink(255, 51, 153);
-  Uniform_Texture material_pink = Uniform_Texture(pink);
+  PhongMaterial phong_material(pink, 0.5, 0.5, 0.5, 1);
 
   Color sth(150, 10, 20);
   Uniform_Texture material_sth = Uniform_Texture(sth);
@@ -30,23 +35,29 @@ int main() {
   // Create a sphere
   Point sphere_center = Point(0, 0, 0);
   double sphere_radius = 4.2;
-  Sphere sphere = Sphere(sphere_center, sphere_radius, &material_pink);
+  Sphere sphere = Sphere(sphere_center, sphere_radius, &phong_material);
 
   Point sphere2_center = Point(9, 7, 0);
   double sphere2_radius = 2.1;
   Sphere sphere2 = Sphere(sphere2_center, sphere2_radius, &material_sth);
 
-  // Our image parameter
-  Image image(1200, 675);
+  // Create light
+  Vector light_position(0, 10, 10);
+  Color light_color(255, 255, 255);
+  double light_intensity = 1;
+  PointLight light(light_position, light_color, light_intensity);
 
   // Camera definition
   Point position(0, -10, 10);
   Vector direction = Vector(0, 0, 0) - position;
   Vector up = Vector(0, position.y, 0) ^ direction;
   Camera camera(position, direction, up, 1, 120, 90, image);
-  Scene scene(camera);
+
+  // Create scene
+  Scene scene(camera, 0.5);
   scene.addObject(&sphere2);
   scene.addObject(&sphere);
+  scene.addLight(&light);
 
   Ray ray;
   std::optional<Point> intersection;
@@ -65,7 +76,7 @@ int main() {
 
         if (new_distance < distance) {
           distance = new_distance;
-          color = object->get_texture(intersection.value());
+          color = object->get_texture(intersection.value(), ray, scene);
         }
       }
 
