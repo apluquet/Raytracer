@@ -8,9 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-
-#ifndef UTILS_SCENE_H_
-#define UTILS_SCENE_H_
+#pragma once
 
 #include <list>
 
@@ -32,5 +30,3 @@ class Scene {
   std::list<Light> lights;
   Camera camera;
 };
-
-#endif  // UTILS_SCENE_H_

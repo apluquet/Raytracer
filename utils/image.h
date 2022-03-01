@@ -9,8 +9,7 @@
  *
  */
 
-#ifndef UTILS_IMAGE_H_
-#define UTILS_IMAGE_H_
+#pragma once
 
 #include <cstdio>
 #include <fstream>
@@ -36,5 +35,3 @@ class Image {
   std::size_t width;
   std::vector<std::vector<Color>> my_image;
 };
-
-#endif  // UTILS_IMAGE_H_

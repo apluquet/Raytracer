@@ -8,9 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-
-#ifndef UTILS_COLOR_H_
-#define UTILS_COLOR_H_
+#pragma once
 
 #include <cstddef>
 
@@ -23,5 +21,3 @@ class Color {
   size_t green;
   size_t blue;
 };
-
-#endif  // UTILS_COLOR_H_

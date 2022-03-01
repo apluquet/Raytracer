@@ -9,8 +9,7 @@
  *
  */
 
-#ifndef UTILS_OBJECTS_SPHERE_H_
-#define UTILS_OBJECTS_SPHERE_H_
+#pragma once
 
 #include <optional>
 
@@ -31,5 +30,3 @@ class Sphere : public Object {
   double radius;
   Texture_Material *material;
 };
-
-#endif  // UTILS_OBJECTS_SPHERE_H_

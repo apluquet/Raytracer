@@ -9,8 +9,7 @@
  *
  */
 
-#ifndef UTILS_VECTOR_H_
-#define UTILS_VECTOR_H_
+#pragma once
 
 #include <math.h>
 
@@ -39,5 +38,3 @@ class Vector {
   double y;
   double z;
 };
-
-#endif  // UTILS_VECTOR_H_

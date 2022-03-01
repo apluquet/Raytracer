@@ -8,9 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-
-#ifndef UTILS_OBJECT_H_
-#define UTILS_OBJECT_H_
+#pragma once
 
 #include <optional>
 
@@ -40,5 +38,3 @@ class Object {
 
   Texture_Material *material;
 };
-
-#endif  // UTILS_OBJECT_H_

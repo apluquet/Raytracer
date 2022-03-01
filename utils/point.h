@@ -8,9 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-
-#ifndef UTILS_POINT_H_
-#define UTILS_POINT_H_
+#pragma once
 
 #include "utils/vector.h"
 
@@ -18,5 +16,3 @@
  * withot having to reifinde many methods.
  */
 using Point = Vector;
-
-#endif  // UTILS_POINT_H_

@@ -9,8 +9,7 @@
  *
  */
 
-#ifndef UTILS_CAMERA_H_
-#define UTILS_CAMERA_H_
+#pragma once
 
 #include "utils/image.h"
 #include "utils/point.h"
@@ -51,5 +50,3 @@ class Camera {
   Vector image_down;   // Unit vector for a pixel height
   Vector image_right;  // Unit vecto for a pixel width
 };
-
-#endif  // UTILS_CAMERA_H_

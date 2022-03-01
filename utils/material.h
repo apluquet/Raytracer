@@ -8,9 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-
-#ifndef UTILS_MATERIAL_H_
-#define UTILS_MATERIAL_H_
+#pragma once
 
 #include <stdint.h>
 
@@ -47,5 +45,3 @@ class Uniform_Texture : public Texture_Material {
 
   Color color;
 };
-
-#endif  // UTILS_MATERIAL_H_

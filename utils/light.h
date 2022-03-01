@@ -8,9 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-
-#ifndef UTILS_LIGHT_H_
-#define UTILS_LIGHT_H_
+#pragma once
 
 #include "utils/color.h"
 #include "utils/point.h"
@@ -26,5 +24,3 @@ class PointLight : public Light {
   Color color;
   double intensity;
 };
-
-#endif  // UTILS_LIGHT_H_

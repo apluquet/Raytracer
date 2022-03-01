@@ -8,9 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-
-#ifndef UTILS_RAY_H_
-#define UTILS_RAY_H_
+#pragma once
 
 #include "utils/point.h"
 #include "utils/vector.h"
@@ -26,5 +24,3 @@ class Ray {
   Point origin;
   Vector direction;
 };
-
-#endif  // UTILS_RAY_H_
