@@ -50,9 +50,9 @@ Vector Vector::operator+(const Vector &other) const {
   return Vector(new_x, new_y, new_z);
 }
 
-double Vector::length() const { return sqrt(x * x + y * y + z * z); }
+Vector Vector::operator-() const { return Vector(-x, -y, -z); }
 
-Vector Vector::negative() const { return Vector(-x, -y, -z); }
+double Vector::length() const { return sqrt(x * x + y * y + z * z); }
 
 Vector Vector::normalize() const { return *this / this->length(); }
 
