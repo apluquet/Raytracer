@@ -21,7 +21,7 @@
 
 struct Intersection {
   Intersection(const Ray &ray, const Point &point, const Vector &normal)
-      : ray(ray), point(point), normal(normal) {}
+      : ray(ray), point(point), normal(normal.normalize()) {}
 
   Ray ray;
   Point point;
