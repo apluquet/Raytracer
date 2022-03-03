@@ -30,8 +30,8 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
   for (Light *light : scene.lights) {
     light_direction = (intersection.point - light->get_position()).normalize();
     cos_theta = light_direction * intersection.normal;
-    // reflection = intersection.normal * 2 * cos_theta - light_direction;
-    // cos_omega = intersection.ray.direction * reflection;
+    reflection = intersection.normal * 2 * cos_theta - light_direction;
+    cos_omega = reflection * intersection.ray.direction;
 
     if (cos_theta < 0) cos_theta = 0;
 
@@ -40,12 +40,14 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
                               light->get_color().blue / 255. * color.blue);
 
     diffuse = diffuse + point_color * cos_theta * light->get_intensity() * kd;
-    // specular = specular + light->get_color() * pow(cos_omega, alpha) * ks;
+
+    specular = specular + light->get_color() * light->get_intensity() *
+                              pow(cos_omega, alpha) * ks;
   }
 
   // SPECULAR
   // I s = i s k s ( R → ⋅ V → ) α = i s k s cos α ⁡ Ω
   // R se déduit par la relation R = 2 (N.L) N - L = 2 cos(theta) N - L
 
-  return ambient + diffuse;
+  return ambient + diffuse + specular;
 }

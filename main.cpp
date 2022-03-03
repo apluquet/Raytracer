@@ -23,14 +23,17 @@ int main() {
   std::cout << "Hello World" << std::endl;
 
   // Our image parameter
-  Image image(1200, 675);
+  Image image(1920, 1080);
 
   // Create materials
   Color pink(255, 51, 153);
-  PhongMaterial phong_material(pink, 0.5, 0.5, 0.5, 1);
+  PhongMaterial phong_material(pink, 0.2, 0.3, 0.5, 100);
 
   Color sth(150, 10, 20);
-  Uniform_Texture material_sth = Uniform_Texture(sth);
+  PhongMaterial phong_material2(sth, 0.2, 0.6, 0.2, 100);
+
+  Color gray(170, 170, 170);
+  PhongMaterial phong_material3(gray, 0.4, 0.4, 0.2, 40);
 
   // Create a sphere
   Point sphere_center = Point(0, 0, 0);
@@ -39,24 +42,30 @@ int main() {
 
   Point sphere2_center = Point(9, 7, 0);
   double sphere2_radius = 2.1;
-  Sphere sphere2 = Sphere(sphere2_center, sphere2_radius, &material_sth);
+  Sphere sphere2 = Sphere(sphere2_center, sphere2_radius, &phong_material2);
+
+  Point sphere_plan_center = Point(0, 0, -1000);
+  double sphere_plan_radius = 1000 - sphere_radius;
+  Sphere sphere_plan =
+      Sphere(sphere_plan_center, sphere_plan_radius, &phong_material3);
 
   // Create light
-  Vector light_position(0, 10, 10);
+  Vector light_position(0, 20, 0);
   Color light_color(255, 255, 255);
   double light_intensity = 1;
   PointLight light(light_position, light_color, light_intensity);
 
   // Camera definition
-  Point position(0, -10, 10);
-  Vector direction = Vector(0, 0, 0) - position;
-  Vector up = Vector(0, position.y, 0) ^ direction;
+  Point position(0, 20, 0);
+  Vector direction = Vector(0, -1, 0);
+  Vector up = Vector(0, 0, 1);
   Camera camera(position, direction, up, 1, 120, 90, image);
 
   // Create scene
   Scene scene(camera, 0.5);
   scene.addObject(&sphere2);
   scene.addObject(&sphere);
+  scene.addObject(&sphere_plan);
   scene.addLight(&light);
 
   Ray ray;
