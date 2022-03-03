@@ -77,7 +77,7 @@ int main() {
 
         if (new_distance < distance) {
           distance = new_distance;
-          color = object->get_texture(intersection.value().point, ray, scene);
+          color = object->get_texture(intersection.value(), scene);
         }
       }
 

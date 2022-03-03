@@ -38,7 +38,7 @@ std::optional<Intersection> Sphere::intersect(const Ray &ray) {
 
 Vector Sphere::normal(const Point &point) { return point - center; }
 
-Color Sphere::get_texture(const Point &point, const Ray &ray,
+Color Sphere::get_texture(const Intersection &intersection,
                           const Scene &scene) {
-  return material->get(point, ray, scene);
+  return material->get(intersection, scene);
 }

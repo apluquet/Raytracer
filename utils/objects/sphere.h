@@ -24,7 +24,7 @@ class Sphere : public Object {
 
   std::optional<Intersection> intersect(const Ray &ray) override;
   Vector normal(const Point &point) override;
-  Color get_texture(const Point &point, const Ray &ray,
+  Color get_texture(const Intersection &intersection,
                     const Scene &scene) override;
 
   Point center;

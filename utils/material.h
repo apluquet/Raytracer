@@ -13,6 +13,7 @@
 #include <stdint.h>
 
 #include "utils/color.h"
+#include "utils/intersection.h"
 #include "utils/point.h"
 #include "utils/scene.h"
 
@@ -40,19 +41,20 @@ class Texture_Material {
   /**
    * @brief
    *
-   * @param point : The point of the material for which to compute
-   * @param ray : The ray that touched the point and asked for the texture.
+   * @param intersection : Contains :
+   * - The point of the material for which to compute
+   * - The ray that touched the point and asked for the texture.
    * @param scene : The scene object containing every object and light.
    * @return Color
    */
-  virtual Color get(const Point &point, const Ray &ray, const Scene &scene) = 0;
+  virtual Color get(const Intersection &intersection, const Scene &scene) = 0;
 };
 
 class Uniform_Texture : public Texture_Material {
  public:
   explicit Uniform_Texture(const Color &color) : color(color) {}
 
-  Color get(const Point &point, const Ray &ray, const Scene &scene) {
+  Color get(const Intersection &intersection, const Scene &scene) {
     return color;
   }
 
