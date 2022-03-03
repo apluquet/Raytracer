@@ -14,15 +14,20 @@
 
 class Color {
  public:
+  Color() : red(0), green(0), blue(0) {}
   Color(size_t red, size_t green, size_t blue)
       : red(red), green(green), blue(blue) {}
 
   Color operator+(const Color &other) const {
-    return Color(red + other.red, blue + other.blue, green + other.green);
+    return Color(red + other.red, green + other.green, blue + other.blue);
+  }
+
+  Color operator*(const Color &other) const {
+    return Color(red * other.red, green * other.green, blue * other.blue);
   }
 
   Color operator*(const double &value) const {
-    return Color(red * value, blue * value, green * value);
+    return Color(red * value, green * value, blue * value);
   }
 
   size_t red;
