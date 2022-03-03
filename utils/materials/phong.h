@@ -19,7 +19,7 @@ class PhongMaterial : public Texture_Material {
                          const double &ks, const double &alpha)
       : color(color), ka(ka), kd(kd), ks(ks), alpha(alpha) {}
 
-  Color get(const Point &point, const Ray &ray, const Scene &scene) override;
+  Color get(const Intersection &intersection, const Scene &scene) override;
 
   Color color;
 
