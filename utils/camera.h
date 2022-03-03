@@ -35,7 +35,7 @@ class Camera {
 
     // Compute unit vectors of the image plan
     image_right = (direction ^ up).normalize() * pixel_width;
-    image_down = up.negative().normalize() * pixel_height;
+    image_down = (-up).normalize() * pixel_height;
 
     // TOp left corner of our image
     image_origin = position + direction.normalize() * z_min -
