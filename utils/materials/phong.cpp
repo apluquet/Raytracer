@@ -18,8 +18,6 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
   Color ambient = color * scene.ambientIntensity * ka;
   // See if we do not hit another object
 
-  // DIFFUSE
-  // I_d = i_d k_d (L.N) = i_d k_d cos(theta)
   Vector light_direction;
   Vector reflection;
   double cos_theta;  // Angle between light and normal
@@ -39,15 +37,18 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
                               light->get_color().green / 255. * color.green,
                               light->get_color().blue / 255. * color.blue);
 
+    // DIFFUSE
+    // I_d = i_d k_d (L.N) = i_d k_d cos(theta)
+
     diffuse = diffuse + point_color * cos_theta * light->get_intensity() * kd;
 
+    // SPECULAR
+    // I_s = i_s * k_s * (R.V)^α = i_s * k_s * cos^α(Ω)
+    // Le rayon réfléchi R se déduit par la relation  :
+    // R = 2 * (N.L) * N - L = 2 * cos(theta) * N - L
     specular = specular + light->get_color() * light->get_intensity() *
                               pow(cos_omega, alpha) * ks;
   }
-
-  // SPECULAR
-  // I s = i s k s ( R → ⋅ V → ) α = i s k s cos α ⁡ Ω
-  // R se déduit par la relation R = 2 (N.L) N - L = 2 cos(theta) N - L
 
   return ambient + diffuse + specular;
 }
