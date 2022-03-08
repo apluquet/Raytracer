@@ -31,6 +31,7 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
     if (cos_theta < 0) cos_theta = 0;
     reflection = intersection.normal * 2 * cos_theta - light_direction;
     cos_omega = reflection * -intersection.ray.direction;
+    if (cos_omega < 0) cos_omega = 0;
 
     Color point_color = Color(light->get_color().red / 255. * color.red,
                               light->get_color().green / 255. * color.green,
