@@ -26,12 +26,11 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
   Color specular;
 
   for (Light *light : scene.lights) {
-    light_direction = (intersection.point - light->get_position()).normalize();
+    light_direction = (light->get_position() - intersection.point).normalize();
     cos_theta = light_direction * intersection.normal;
-    reflection = intersection.normal * 2 * cos_theta - light_direction;
-    cos_omega = reflection * intersection.ray.direction;
-
     if (cos_theta < 0) cos_theta = 0;
+    reflection = intersection.normal * 2 * cos_theta - light_direction;
+    cos_omega = reflection * -intersection.ray.direction;
 
     Color point_color = Color(light->get_color().red / 255. * color.red,
                               light->get_color().green / 255. * color.green,
