@@ -45,3 +45,9 @@ build
 
 # Binary 
 images
+*.ppm
+*.bin
+*.gltf
+*.mtl
+*.glb
+*.obj
