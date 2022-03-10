@@ -10,6 +10,9 @@
  */
 #pragma once
 
+#include <math.h>
+
+#include <algorithm>
 #include <cstddef>
 
 class Color {
@@ -19,7 +22,10 @@ class Color {
       : red(red), green(green), blue(blue) {}
 
   Color operator+(const Color &other) const {
-    return Color(red + other.red, green + other.green, blue + other.blue);
+    size_t max = 255;
+    return Color(std::min(red + other.red, max),
+                 std::min(green + other.green, max),
+                 std::min(blue + other.blue, max));
   }
 
   Color operator*(const Color &other) const {
@@ -28,6 +34,10 @@ class Color {
 
   Color operator*(const double &value) const {
     return Color(red * value, green * value, blue * value);
+  }
+
+  Color operator==(const Color &other) const {
+    return Color(red == other.red, green == other.green, blue == other.green);
   }
 
   size_t red;
