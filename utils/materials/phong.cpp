@@ -18,15 +18,30 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
   Color ambient = color * scene.ambientIntensity * ka;
   // See if we do not hit another object
 
+  Vector light_vector;
   Vector light_direction;
+  Ray light_ray;
   Vector reflection;
   double cos_theta;  // Angle between light and normal
   double cos_omega;  // Angle between ray incident and reflection
   Color diffuse;
   Color specular;
+  std::optional<Intersection> intersect_object;
 
   for (Light *light : scene.lights) {
-    light_direction = (light->get_position() - intersection.point).normalize();
+    light_vector = light->get_position() - intersection.point;
+    light_direction = (light_vector).normalize();
+    light_ray =
+        Ray(intersection.point + light_direction * 0.00001, light_direction);
+
+    intersect_object = scene.intersectObject(light_ray, light_vector.length());
+
+    if (intersect_object.has_value()) {
+      double distance =
+          (intersect_object.value().point - intersection.point).length();
+      if (distance < light_vector.length()) continue;
+    }
+
     cos_theta = light_direction * intersection.normal;
     if (cos_theta < 0) cos_theta = 0;
     reflection = intersection.normal * 2 * cos_theta - light_direction;
