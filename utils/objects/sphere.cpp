@@ -48,8 +48,8 @@ std::optional<Intersection> Sphere::intersect(const Ray &ray) {
 
   Point intersection_point = ray.origin + ray.direction * t0;
 
-  Intersection intersection(ray, intersection_point,
-                            normal(intersection_point));
+  Intersection intersection(ray, intersection_point, normal(intersection_point),
+                            this);
 
   return intersection;
 }
