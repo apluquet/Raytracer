@@ -15,15 +15,21 @@
 
 #pragma once
 
+#include "utils/object.h"
 #include "utils/point.h"
 #include "utils/ray.h"
 #include "utils/vector.h"
 
+class Object;
+class Scene;
+
 struct Intersection {
-  Intersection(const Ray &ray, const Point &point, const Vector &normal)
-      : ray(ray), point(point), normal(normal.normalize()) {}
+  Intersection(const Ray &ray, const Point &point, const Vector &normal,
+               Object *object)
+      : ray(ray), point(point), normal(normal.normalize()), object(object) {}
 
   Ray ray;
   Point point;
   Vector normal;
+  Object *object;
 };
