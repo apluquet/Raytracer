@@ -33,6 +33,7 @@
  * implementation of (at least) the 3 previous methods.
  */
 
+class Intersection;
 class Scene;
 class Texture_Material;
 
