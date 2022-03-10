@@ -16,6 +16,7 @@
 #include "utils/light.h"
 #include "utils/object.h"
 
+class Intersection;
 class Object;
 class Texture_Material;
 
@@ -26,6 +27,9 @@ class Scene {
 
   void addObject(Object *object);
   void addLight(Light *light);
+
+  std::optional<Intersection> intersectObject(
+      const Ray &ray, const double &min_distance = -1) const;
 
   // void deleteObject(Object object);
   // void deleteLight(Light light);
