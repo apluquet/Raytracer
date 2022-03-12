@@ -16,6 +16,7 @@ set(SRCS
     utils/image.cpp
     utils/materials/phong.cpp
     utils/objects/sphere.cpp 
+    utils/objects/triangle.cpp
     utils/ray.cpp
     utils/scene.cpp
     utils/vector.cpp
@@ -31,6 +32,7 @@ set(HEADERS
     utils/materials/phong.h
     utils/object.h
     utils/objects/sphere.h
+    utils/objects/triangle.h
     utils/point.h 
     utils/ray.h
     utils/scene.h
