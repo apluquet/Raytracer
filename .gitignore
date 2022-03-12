@@ -51,4 +51,4 @@ images
 *.mtl
 *.glb
 *.obj
-*.blend
+*.blend*
