@@ -11,6 +11,8 @@
 
 #include "utils/vector.h"
 
+#include <stdexcept>
+
 Vector Vector::operator*(const double &value) const {
   double new_x = x * value;
   double new_y = y * value;
@@ -55,6 +57,19 @@ Vector Vector::operator-() const { return Vector(-x, -y, -z); }
 double Vector::length() const { return sqrt(x * x + y * y + z * z); }
 
 Vector Vector::normalize() const { return *this / this->length(); }
+
+double Vector::operator[](const int &index) const {
+  switch (index) {
+    case 0:
+      return x;
+    case 1:
+      return y;
+    case 2:
+      return z;
+    default:
+      throw std::out_of_range("Vector index should be 0, 1  or 2.");
+  }
+}
 
 std::ostream &operator<<(std::ostream &os, Vector &vector) {
   os << "(" << vector.x << ", " << vector.y << ", " << vector.z << ")";

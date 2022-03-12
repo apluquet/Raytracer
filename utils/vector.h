@@ -30,6 +30,7 @@ class Vector {
   Vector operator-() const;
   double length() const;
   Vector normalize() const;
+  double operator[](const int &index) const;
 
   friend std::ostream &operator<<(std::ostream &os, Vector &vector);
   friend std::ostream &operator<<(std::ostream &os, const Vector &vector);
