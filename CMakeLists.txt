@@ -37,7 +37,9 @@ set(HEADERS
     utils/ray.h
     utils/scene.h
     utils/vector.h
+    tinyobjloader/tiny_obj_loader.h
     )
+
 
 add_compile_options(-g)
 add_executable(raytracer ${SRCS} ${HEADERS})

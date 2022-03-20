@@ -9,8 +9,11 @@
  *
  */
 
+#define TINYOBJLOADER_IMPLEMENTATION  // define this in only *one* .cc
+
 #include <iostream>
 
+#include "tinyobjloader/tiny_obj_loader.h"
 #include "utils/image.h"
 #include "utils/materials/phong.h"
 #include "utils/objects/sphere.h"
@@ -20,75 +23,81 @@
 #include "utils/scene.h"
 #include "utils/vector.h"
 
-int main() {
+int main(int argc, char* argv[]) {
   std::cout << "Hello World" << std::endl;
 
-  // Our image parameter
-  Image image(1920, 1080);
+  if (argc != 2) throw std::invalid_argument("Missing scene .obj file.");
 
-  // Create materials
-  Color pink(255, 0, 0);
-  Color blue(0, 0, 255);
-  Color green(0, 255, 0);
-  PhongMaterial phong_material(pink, 0.2, 1, 0.5, 150);
-  Uniform_Texture uniform(pink);
-  Uniform_Texture uniform_blue(blue);
-  Uniform_Texture uniform_green(green);
+  std::string inputfile = argv[1];
+  tinyobj::ObjReaderConfig reader_config;
+
+  // Path to material files
+  // Relative to binary
+  // TODO Find out from file path
+  reader_config.mtl_search_path = "../scenes";
+
+  tinyobj::ObjReader reader;
+
+  if (!reader.ParseFromFile(inputfile, reader_config)) {
+    if (!reader.Error().empty()) {
+      std::cerr << "TinyObjReader: " << reader.Error();
+    }
+    exit(1);
+  }
+
+  if (!reader.Warning().empty()) {
+    std::cout << "TinyObjReader: " << reader.Warning();
+  }
+
+  auto& attrib = reader.GetAttrib();
+  auto& shapes = reader.GetShapes();
+  auto& materials = reader.GetMaterials();
+
+  // Loop over shapes
+  for (size_t s = 0; s < shapes.size(); s++) {
+    // Loop over faces(polygon)
+    size_t index_offset = 0;
+    for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
+      size_t fv = size_t(shapes[s].mesh.num_face_vertices[f]);
+
+      // Loop over vertices in the face.
+      for (size_t v = 0; v < fv; v++) {
+        // access to vertex
+        tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
+        tinyobj::real_t vx = attrib.vertices[3 * size_t(idx.vertex_index) + 0];
+        tinyobj::real_t vy = attrib.vertices[3 * size_t(idx.vertex_index) + 1];
+        tinyobj::real_t vz = attrib.vertices[3 * size_t(idx.vertex_index) + 2];
+
+        // Check if `normal_index` is zero or positive. negative = no normal
+        // data
+        if (idx.normal_index >= 0) {
+          tinyobj::real_t nx = attrib.normals[3 * size_t(idx.normal_index) + 0];
+          tinyobj::real_t ny = attrib.normals[3 * size_t(idx.normal_index) + 1];
+          tinyobj::real_t nz = attrib.normals[3 * size_t(idx.normal_index) + 2];
+        }
+
+        // Check if `texcoord_index` is zero or positive. negative = no texcoord
+        // data
+        if (idx.texcoord_index >= 0) {
+          tinyobj::real_t tx =
+              attrib.texcoords[2 * size_t(idx.texcoord_index) + 0];
+          tinyobj::real_t ty =
+              attrib.texcoords[2 * size_t(idx.texcoord_index) + 1];
+        }
+
+        // Optional: vertex colors
+        // tinyobj::real_t red   = attrib.colors[3*size_t(idx.vertex_index)+0];
+        // tinyobj::real_t green = attrib.colors[3*size_t(idx.vertex_index)+1];
+        // tinyobj::real_t blue  = attrib.colors[3*size_t(idx.vertex_index)+2];
+      }
+      index_offset += fv;
+
+      // per-face material
+      shapes[s].mesh.material_ids[f];
+    }
+  }
 
   /*
-  // Create a sphere
-  Point sphere_center = Point(0, 0, 0);
-  double sphere_radius = 1;
-  Sphere sphere = Sphere(sphere_center, sphere_radius, &phong_material);
-
-  Point sphere_center2 = Point(1, 0.5, 0.5);
-  double sphere_radius2 = 0.1;
-  Sphere sphere2 = Sphere(sphere_center2, sphere_radius2, &phong_material);
-  */
-
-  // Triangle
-  Point A(0, -1, 0);
-  Point B(0, 0, 1);
-  Point C(0, 1, 0);
-
-  Point D(1, 1, 0);
-  Point E(1, -1, 0);
-  Point F(-1, -1, 0);
-
-  Point G(-1, -1, 0);
-  Point H(-1, 1, 0);
-  Point I(1, 1, 0);
-  Triangle triangle(A, B, C, &phong_material);
-  Triangle triangleplan(D, E, F, &phong_material);
-  Triangle triangleplan2(G, H, I, &uniform_blue);
-  // Triangle triangle(A, B, C, &uniform);
-
-  // Triangle 2
-  Point B2(0, 0, -1);
-  Triangle triangle2(A, B2, C, &uniform);
-
-  // Create light
-  Vector light_position(5, 5, 5);
-  Color light_color(255, 255, 255);
-  double light_intensity = 1;
-  PointLight light(light_position, light_color, light_intensity);
-
-  // Camera definition
-  Point position(2, 0, 1.5);
-  Vector direction = Vector(-1, 0, 0);
-  Vector up = Vector(0, 0, 1);
-  Camera camera(position, direction, up, 1, 120, 90, image);
-
-  // Create scene
-  Scene scene(camera, 0.5);
-  // scene.addObject(&sphere);
-  // scene.addObject(&sphere2);
-  scene.addObject(&triangle);
-  // scene.addObject(&triangleplan);
-  // scene.addObject(&triangleplan2);
-  // scene.addObject(&triangle2);
-  scene.addLight(&light);
-
   Ray ray;
   std::optional<Intersection> intersection;
   Color color(0, 0, 0);
@@ -109,4 +118,5 @@ int main() {
     }
 
   image.to_ppm();
+  */
 }
