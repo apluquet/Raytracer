@@ -67,7 +67,7 @@ Vector Triangle::normal(const Point &point) {
   Vector AC = C - A;
   Vector normal = AB ^ AC;
 
-  return -normal;
+  return normal;
 }
 
 Color Triangle::get_texture(const Intersection &intersection,
