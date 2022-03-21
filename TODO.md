@@ -5,3 +5,4 @@ Reflection
 Scene loader (gltf)
 Multithreading
 Options parser (resolution, .obj file, )
+Coverage analysis (and optimisation)
