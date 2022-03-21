@@ -23,20 +23,14 @@
 #include "utils/scene.h"
 #include "utils/vector.h"
 
-int main(int argc, char* argv[]) {
-  std::cout << "Hello World" << std::endl;
-
-  if (argc != 2) throw std::invalid_argument("Missing scene .obj file.");
-
-  std::string inputfile = argv[1];
+static void load_object(const std::string& inputfile,
+                        tinyobj::ObjReader& reader) {
   tinyobj::ObjReaderConfig reader_config;
 
   // Path to material files
   // Relative to binary
   // TODO Find out from file path
   reader_config.mtl_search_path = "../scenes";
-
-  tinyobj::ObjReader reader;
 
   if (!reader.ParseFromFile(inputfile, reader_config)) {
     if (!reader.Error().empty()) {
@@ -48,10 +42,30 @@ int main(int argc, char* argv[]) {
   if (!reader.Warning().empty()) {
     std::cout << "TinyObjReader: " << reader.Warning();
   }
+}
+
+int main(int argc, char* argv[]) {
+  if (argc != 2) throw std::invalid_argument("Missing scene .obj file.");
+
+  tinyobj::ObjReader reader;
+  load_object(argv[1], reader);
 
   auto& attrib = reader.GetAttrib();
   auto& shapes = reader.GetShapes();
-  auto& materials = reader.GetMaterials();
+  // auto& materials = reader.GetMaterials();
+
+  // Create materials
+  Color red(255, 0, 0);
+  PhongMaterial phong_material(red, 0.2, 1, 0.5, 100);
+
+  // Create scene (camera + light)
+  PointLight light(Point(5, 5, 5), Color(255, 255, 255), 1);
+  // Image image(1920, 1080);
+  Image image(192 * 2, 108 * 2);
+  Camera camera(Point(3, 0, 0), Vector(-1, 0, 0), Vector(0, 0, 1), 1, 120, 90,
+                image);
+  Scene scene(camera, 1.5);
+  scene.addLight(&light);
 
   // Loop over shapes
   for (size_t s = 0; s < shapes.size(); s++) {
@@ -60,6 +74,23 @@ int main(int argc, char* argv[]) {
     for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
       size_t fv = size_t(shapes[s].mesh.num_face_vertices[f]);
 
+      // Create Triangle objects
+      tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + 0];
+      Point A(attrib.vertices[3 * size_t(idx.vertex_index) + 0],
+              attrib.vertices[3 * size_t(idx.vertex_index) + 1],
+              attrib.vertices[3 * size_t(idx.vertex_index) + 2]);
+      idx = shapes[s].mesh.indices[index_offset + 1];
+      Point B(attrib.vertices[3 * size_t(idx.vertex_index) + 0],
+              attrib.vertices[3 * size_t(idx.vertex_index) + 1],
+              attrib.vertices[3 * size_t(idx.vertex_index) + 2]);
+      idx = shapes[s].mesh.indices[index_offset + 2];
+      Point C(attrib.vertices[3 * size_t(idx.vertex_index) + 0],
+              attrib.vertices[3 * size_t(idx.vertex_index) + 1],
+              attrib.vertices[3 * size_t(idx.vertex_index) + 2]);
+      Triangle* triangle = new Triangle(A, B, C, &phong_material);
+      scene.addObject(triangle);
+
+      /*
       // Loop over vertices in the face.
       for (size_t v = 0; v < fv; v++) {
         // access to vertex
@@ -90,14 +121,17 @@ int main(int argc, char* argv[]) {
         // tinyobj::real_t green = attrib.colors[3*size_t(idx.vertex_index)+1];
         // tinyobj::real_t blue  = attrib.colors[3*size_t(idx.vertex_index)+2];
       }
+      */
+
       index_offset += fv;
 
       // per-face material
-      shapes[s].mesh.material_ids[f];
+      // shapes[s].mesh.material_ids[f];
     }
   }
 
-  /*
+  std::cout << scene.objects.size() << " triangles\n";
+
   Ray ray;
   std::optional<Intersection> intersection;
   Color color(0, 0, 0);
@@ -118,5 +152,4 @@ int main(int argc, char* argv[]) {
     }
 
   image.to_ppm();
-  */
 }
