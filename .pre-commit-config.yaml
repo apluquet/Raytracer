@@ -20,5 +20,5 @@ repos:
           description: Check correctness of C code using cppcheck.
           language: system
           files: \.(c|cc|cxx|cpp|h|hpp|hxx)$
-          entry: cppcheck --error-exitcode=1
-          args: ["--enable=warning", --language=c++]
+          entry: cppcheck
+          args: ["--enable=warning", "--language=c++", "--error-exitcode=1", "--verbose"]
