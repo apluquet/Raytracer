@@ -25,16 +25,10 @@ std::vector<Object *> Blob::evaluate(const Scene &scene) const {
         marching_cube_origin = origin + Vector(x * step, y * step, z * step);
         index = 0;
 
-        for (int zz = 0; zz < 2; zz++) {
-          for (int yy = 0; yy < 2; yy++) {
-            for (int xx = 0; xx < 2; xx++) {
-              Point potential_point = marching_cube_origin +
-                                      Vector(xx * step, yy * step, zz * step);
-              potential = scene.get_potential(potential_point);
-
-              if (potential >= 1) index |= powers[xx + yy * 2 + zz * 4];
-            }
-          }
+        for (int i = 0; i < 8; i++) {
+          Point potential_point = marching_cube_origin + vertices[i];
+          potential = scene.get_potential(potential_point);
+          if (potential >= 1) index |= powers[i];
         }
 
         // Boucle pour créer nos triangles
@@ -44,7 +38,7 @@ std::vector<Object *> Blob::evaluate(const Scene &scene) const {
           Point A = marching_cube_origin + edges[edges_list[index][i]];
           Point B = marching_cube_origin + edges[edges_list[index][i + 1]];
           Point C = marching_cube_origin + edges[edges_list[index][i + 2]];
-          Triangle *triangle = new Triangle(A, B, C, default_material);
+          Triangle *triangle = new Triangle(A, C, B, default_material);
           triangles.push_back(triangle);
         }
       }

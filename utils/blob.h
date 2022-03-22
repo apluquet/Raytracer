@@ -28,17 +28,47 @@ class Blob {
         step(edge / nb_of_step) {
     double half_step = step / 2;
 
+    /* Vertices
+
+
+   .0--------1
+ .' |      .'|
+3--------2'  |
+|   |   |    |
+|   |   |    |
+|  ,4---+----5
+|.'     |  .'
+7--------6'
+
+z
+^   y
+|/
+---> x
+
+    */
+
+    vertices = {
+        Vector(0, step, step),     // 0
+        Vector(step, step, step),  // 1
+        Vector(step, 0, step),     // 2
+        Vector(0, 0, step),        // 3
+        Vector(0, step, 0),        // 4
+        Vector(step, step, 0),     // 5
+        Vector(step, 0, 0),        // 6
+        Vector(0, 0, 0),           // 7
+    };
+
     /* Edges
 
-        6
+        0
    .+--------+
- .7 |      5'|
-+----4---+'  |
-|   11  |    10
-8   |   9    |
-|  ,+---+-2--+
-|.3     |  .1
-+---0----+'
+ .3 |      1'|
++----2---+'  |
+|   8   |    9
+11  |   10   |
+|  ,+---+-4--+
+|.7     |  .5
++---6----+'
 
 z
 ^   y
@@ -48,18 +78,18 @@ z
     */
 
     edges = {
-        Vector(half_step, 0, 0),        //
-        Vector(step, half_step, 0),     //
-        Vector(half_step, step, 0),     //
-        Vector(0, half_step, 0),        //
-        Vector(half_step, 0, step),     //
-        Vector(step, half_step, step),  //
-        Vector(half_step, step, step),  //
-        Vector(0, half_step, step),     //
-        Vector(0, 0, half_step),        //
-        Vector(step, 0, half_step),     //
-        Vector(step, step, half_step),  //
-        Vector(0, step, half_step),     //
+        Vector(half_step, step, step),  // 0
+        Vector(step, half_step, step),  // 1
+        Vector(half_step, 0, step),     // 2
+        Vector(0, half_step, step),     // 3
+        Vector(half_step, step, 0),     // 4
+        Vector(step, half_step, 0),     // 5
+        Vector(half_step, 0, 0),        // 6
+        Vector(0, half_step, 0),        // 7
+        Vector(0, step, half_step),     // 8
+        Vector(step, step, half_step),  // 9
+        Vector(step, 0, half_step),     // 10
+        Vector(0, 0, half_step),        // 11
     };
   }
 
@@ -71,10 +101,11 @@ z
   double edge;
   int nb_of_step;
   double step;
+  std::vector<Vector> vertices;
   std::vector<Vector> edges;
 
   PhongMaterial *default_material =
-      new PhongMaterial(Color(255, 0, 0), 1, 1, 0.5, 150);
+      new PhongMaterial(Color(255, 0, 0), 1, 3, 1, 150);
 
   int powers[8] = {1, 2, 4, 8, 16, 32, 64, 128};
   int edges_list[256][15] = {
