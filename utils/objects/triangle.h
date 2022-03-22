@@ -27,6 +27,7 @@ class Triangle : public Object {
   Vector normal(const Point &point) override;
   Color get_texture(const Intersection &intersection,
                     const Scene &scene) override;
+  double get_potential(const Point &point) override;
 
   Point A;
   Point B;

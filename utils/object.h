@@ -44,6 +44,7 @@ class Object {
   virtual Vector normal(const Point &point) = 0;
   virtual Color get_texture(const Intersection &intersection,
                             const Scene &scene) = 0;
+  virtual double get_potential(const Point &point) = 0;
 
   Texture_Material *material;
 };

@@ -74,3 +74,5 @@ Color Triangle::get_texture(const Intersection &intersection,
                             const Scene &scene) {
   return material->get(intersection, scene);
 }
+
+double Triangle::get_potential(const Point &point) { return 0; }
