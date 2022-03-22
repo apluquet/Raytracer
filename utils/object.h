@@ -11,6 +11,7 @@
 #pragma once
 
 #include <optional>
+#include <vector>
 
 #include "utils/color.h"
 #include "utils/intersection.h"
@@ -45,6 +46,8 @@ class Object {
   virtual Color get_texture(const Intersection &intersection,
                             const Scene &scene) = 0;
   virtual double get_potential(const Point &point) = 0;
+
+  virtual std::vector<Point> get_position() = 0;
 
   Texture_Material *material;
 };

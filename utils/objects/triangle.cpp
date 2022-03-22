@@ -11,6 +11,8 @@
 
 #include "utils/objects/triangle.h"
 
+#include <vector>
+
 std::optional<Intersection> Triangle::intersect(const Ray &ray) {
   Vector OA = A - ray.origin;
   Vector OB = B - ray.origin;
@@ -55,7 +57,7 @@ std::optional<Intersection> Triangle::intersect(const Ray &ray) {
   if (alpha * gamma < 0) return std::nullopt;
 
   Vector OG = ray.direction / (alpha + beta + gamma);
-  Point G = OG - ray.origin;
+  Point G = OG + ray.origin;
 
   Intersection intersection(ray, G, normal(G), this);
 
@@ -67,7 +69,7 @@ Vector Triangle::normal(const Point &point) {
   Vector AC = C - A;
   Vector normal = AB ^ AC;
 
-  return -normal;
+  return normal;
 }
 
 Color Triangle::get_texture(const Intersection &intersection,
@@ -76,3 +78,5 @@ Color Triangle::get_texture(const Intersection &intersection,
 }
 
 double Triangle::get_potential(const Point &point) { return 0; }
+
+std::vector<Point> Triangle::get_position() { return {A, B, C}; }

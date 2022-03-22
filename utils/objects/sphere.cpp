@@ -12,6 +12,7 @@
 #include "utils/objects/sphere.h"
 
 #include <utility>
+#include <vector>
 
 // https://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
 // Sphere : dot((P - C), (P - C)) = r²
@@ -64,3 +65,5 @@ Color Sphere::get_texture(const Intersection &intersection,
 double Sphere::get_potential(const Point &point) {
   return (point - center).length() < radius;
 }
+
+std::vector<Point> Sphere::get_position() { return {center}; }
