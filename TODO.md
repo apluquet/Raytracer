@@ -6,3 +6,4 @@ Scene loader (gltf)
 Multithreading
 Options parser (resolution, .obj file, )
 Coverage analysis (and optimisation)
+Refactor file structure (create folders, rename 'utils')
