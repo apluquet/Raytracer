@@ -41,5 +41,5 @@ set(HEADERS
     utils/vector.h
     )
 
-add_compile_options(-g)
+add_compile_options(-g -O3)
 add_executable(raytracer ${SRCS} ${HEADERS})
