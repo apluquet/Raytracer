@@ -105,7 +105,7 @@ z
   std::vector<Vector> edges;
 
   PhongMaterial *default_material =
-      new PhongMaterial(Color(255, 0, 0), 1, 3, 1, 150);
+      new PhongMaterial(Color(255, 0, 0), 0.2, 0.5, 0.3, 150);
 
   int powers[8] = {1, 2, 4, 8, 16, 32, 64, 128};
   int edges_list[256][15] = {
