@@ -53,8 +53,7 @@ std::optional<Intersection> Triangle::intersect(const Ray &ray) {
   double beta = coefs[1];
   double gamma = coefs[2];
 
-  if (alpha * beta < 0) return std::nullopt;
-  if (alpha * gamma < 0) return std::nullopt;
+  if (alpha < 0 || beta < 0 || gamma < 0) return std::nullopt;
 
   Vector OG = ray.direction / (alpha + beta + gamma);
   Point G = OG + ray.origin;
