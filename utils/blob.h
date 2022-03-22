@@ -19,6 +19,7 @@
 #include "utils/point.h"
 
 class Blob {
+ public:
   // step < edge
   Blob(const Point &origin, const double &edge, const int &nb_of_step)
       : origin(origin),
@@ -62,7 +63,7 @@ z
     };
   }
 
-  std::vector<Triangle> evaluate(const Scene &scene);
+  std::vector<Object *> evaluate(const Scene &scene) const;
 
   // std::vector<int> potentials;
 
@@ -72,8 +73,8 @@ z
   double step;
   std::vector<Vector> edges;
 
-  PhongMaterial default_material =
-      PhongMaterial(Color(255, 0, 0), 0.2, 1, 0.5, 150);
+  PhongMaterial *default_material =
+      new PhongMaterial(Color(255, 0, 0), 1, 1, 0.5, 150);
 
   int powers[8] = {1, 2, 4, 8, 16, 32, 64, 128};
   int edges_list[256][15] = {

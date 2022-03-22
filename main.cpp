@@ -11,6 +11,7 @@
 
 #include <iostream>
 
+#include "utils/blob.h"
 #include "utils/image.h"
 #include "utils/materials/phong.h"
 #include "utils/objects/sphere.h"
@@ -24,48 +25,22 @@ int main() {
   std::cout << "Hello World" << std::endl;
 
   // Our image parameter
-  Image image(1920, 1080);
+  Image image(192, 108);
 
   // Create materials
-  Color pink(255, 0, 0);
-  Color blue(0, 0, 255);
-  Color green(0, 255, 0);
-  PhongMaterial phong_material(pink, 0.2, 1, 0.5, 150);
-  Uniform_Texture uniform(pink);
-  Uniform_Texture uniform_blue(blue);
-  Uniform_Texture uniform_green(green);
+  Color red(255, 0, 0);
+  PhongMaterial phong_material(red, 1, 1, 0.5, 150);
 
-  /*
   // Create a sphere
   Point sphere_center = Point(0, 0, 0);
   double sphere_radius = 1;
   Sphere sphere = Sphere(sphere_center, sphere_radius, &phong_material);
 
+  /*
   Point sphere_center2 = Point(1, 0.5, 0.5);
   double sphere_radius2 = 0.1;
   Sphere sphere2 = Sphere(sphere_center2, sphere_radius2, &phong_material);
   */
-
-  // Triangle
-  Point A(0, -1, 0);
-  Point B(0, 0, 1);
-  Point C(0, 1, 0);
-
-  Point D(1, 1, 0);
-  Point E(1, -1, 0);
-  Point F(-1, -1, 0);
-
-  Point G(-1, -1, 0);
-  Point H(-1, 1, 0);
-  Point I(1, 1, 0);
-  Triangle triangle(A, B, C, &phong_material);
-  Triangle triangleplan(D, E, F, &phong_material);
-  Triangle triangleplan2(G, H, I, &uniform_blue);
-  // Triangle triangle(A, B, C, &uniform);
-
-  // Triangle 2
-  Point B2(0, 0, -1);
-  Triangle triangle2(A, B2, C, &uniform);
 
   // Create light
   Vector light_position(5, 5, 5);
@@ -74,20 +49,25 @@ int main() {
   PointLight light(light_position, light_color, light_intensity);
 
   // Camera definition
-  Point position(2, 0, 1.5);
+  Point position(2, 0, 0);
   Vector direction = Vector(-1, 0, 0);
   Vector up = Vector(0, 0, 1);
   Camera camera(position, direction, up, 1, 120, 90, image);
 
   // Create scene
   Scene scene(camera, 0.5);
-  // scene.addObject(&sphere);
-  // scene.addObject(&sphere2);
-  scene.addObject(&triangle);
-  // scene.addObject(&triangleplan);
-  // scene.addObject(&triangleplan2);
-  // scene.addObject(&triangle2);
+  scene.addObject(&sphere);
   scene.addLight(&light);
+
+  // Create Blob
+  Blob blob(Point(-2, -2, -2), 4., 10);
+  std::vector<Object*> triangles = blob.evaluate(scene);
+
+  std::cout << triangles.size() << " triangles in blob.\n";
+
+  Scene blob_scene(camera, 0.5);
+  for (Object* triangle : triangles) blob_scene.addObject(triangle);
+  scene = blob_scene;
 
   Ray ray;
   std::optional<Intersection> intersection;
