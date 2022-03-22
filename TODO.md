@@ -4,3 +4,5 @@ Rename Texture_Material and Uniform_Texture.
 Reflection
 Scene loader (gltf)
 Refactor file structure (create folders, rename 'utils')
+Use smart pointers
+Blob material: get material from object ?
