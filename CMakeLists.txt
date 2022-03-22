@@ -12,6 +12,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 # Crée des variables avec les fichiers à compiler
 set(SRCS
     main.cpp
+    utils/blob.cpp
     utils/camera.cpp
     utils/image.cpp
     utils/materials/phong.cpp
@@ -23,6 +24,7 @@ set(SRCS
     )
     
 set(HEADERS
+    utils/blob.h
     utils/camera.h
     utils/color.h 
     utils/image.h 
