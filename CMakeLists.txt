@@ -12,6 +12,7 @@ include_directories(${CMAKE_SOURCE_DIR})
 # Crée des variables avec les fichiers à compiler
 set(SRCS
     main.cpp
+    utils/blob.cpp
     utils/camera.cpp
     utils/image.cpp
     utils/materials/phong.cpp
@@ -25,6 +26,7 @@ set(SRCS
     
 set(HEADERS
     tinyobjloader/tiny_obj_loader.h
+    utils/blob.h
     utils/camera.h
     utils/color.h 
     utils/image.h 
@@ -42,6 +44,5 @@ set(HEADERS
     utils/vector.h
     )
 
-
-add_compile_options(-g)
+add_compile_options(-g -O3)
 add_executable(raytracer ${SRCS} ${HEADERS})

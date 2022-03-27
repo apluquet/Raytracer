@@ -12,6 +12,7 @@
 #pragma once
 
 #include <optional>
+#include <vector>
 
 #include "utils/object.h"
 #include "utils/point.h"
@@ -26,6 +27,9 @@ class Sphere : public Object {
   Vector normal(const Point &point) override;
   Color get_texture(const Intersection &intersection,
                     const Scene &scene) override;
+  double get_potential(const Point &point) override;
+
+  std::vector<Point> get_position() override;
 
   Point center;
   double radius;

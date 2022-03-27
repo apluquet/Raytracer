@@ -11,6 +11,7 @@
 
 #include <iostream>
 
+#include "utils/blob.h"
 #include "utils/image.h"
 #include "utils/materials/phong.h"
 #include "utils/object_loader.h"

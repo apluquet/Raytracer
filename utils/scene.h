@@ -31,6 +31,8 @@ class Scene {
   std::optional<Intersection> intersectObject(
       const Ray &ray, const double &min_distance = -1) const;
 
+  double get_potential(const Point &point) const;
+
   // void deleteObject(Object object);
   // void deleteLight(Light light);
 

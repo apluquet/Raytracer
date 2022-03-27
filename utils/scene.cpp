@@ -36,3 +36,13 @@ std::optional<Intersection> Scene::intersectObject(
   }
   return intersection;
 }
+
+double Scene::get_potential(const Point &point) const {
+  double potential = 0;
+
+  for (Object *object : objects) {
+    potential += object->get_potential(point);
+  }
+
+  return potential;
+}
