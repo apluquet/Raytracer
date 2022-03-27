@@ -7,3 +7,4 @@ Multithreading
 Options parser (resolution, .obj file, )
 Coverage analysis (and optimisation)
 Refactor file structure (create folders, rename 'utils')
+Retrieve normals from .obj (see tinyobjloader github )
