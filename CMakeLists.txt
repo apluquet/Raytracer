@@ -16,6 +16,7 @@ set(SRCS
     utils/camera.cpp
     utils/image.cpp
     utils/materials/phong.cpp
+    utils/object_loader.cpp
     utils/objects/sphere.cpp 
     utils/objects/triangle.cpp
     utils/ray.cpp
@@ -24,6 +25,7 @@ set(SRCS
     )
     
 set(HEADERS
+    tinyobjloader/tiny_obj_loader.h
     utils/blob.h
     utils/camera.h
     utils/color.h 
@@ -33,6 +35,7 @@ set(HEADERS
     utils/material.h
     utils/materials/phong.h
     utils/object.h
+    utils/object_loader.h
     utils/objects/sphere.h
     utils/objects/triangle.h
     utils/point.h 
