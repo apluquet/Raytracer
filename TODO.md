@@ -3,7 +3,6 @@ Compute radius^2 in Sphere constructor rather than at every intersection.
 Rename Texture_Material and Uniform_Texture.
 Reflection
 Scene loader (gltf)
-
 Multithreading
 Options parser (resolution, .obj file, )
 Coverage analysis (and optimisation)
@@ -14,3 +13,5 @@ Normal shading: compute triangle normal using barycentric coordinates
 Use smart pointers
 Blob material: get material from object ?
 Obj and scene boundaries
+
+Update README
