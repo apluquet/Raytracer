@@ -9,13 +9,11 @@
  *
  */
 
-#define TINYOBJLOADER_IMPLEMENTATION  // define this in only *one* .cc
-
 #include <iostream>
 
-#include "tinyobjloader/tiny_obj_loader.h"
 #include "utils/image.h"
 #include "utils/materials/phong.h"
+#include "utils/object_loader.h"
 #include "utils/objects/sphere.h"
 #include "utils/objects/triangle.h"
 #include "utils/point.h"
@@ -23,40 +21,15 @@
 #include "utils/scene.h"
 #include "utils/vector.h"
 
-static void load_object(const std::string& inputfile,
-                        tinyobj::ObjReader& reader) {
-  tinyobj::ObjReaderConfig reader_config;
-
-  // Path to material files
-  // Relative to binary
-  // TODO Find out from file path
-  reader_config.mtl_search_path = "../scenes";
-
-  if (!reader.ParseFromFile(inputfile, reader_config)) {
-    if (!reader.Error().empty()) {
-      std::cerr << "TinyObjReader: " << reader.Error();
-    }
-    exit(1);
-  }
-
-  if (!reader.Warning().empty()) {
-    std::cout << "TinyObjReader: " << reader.Warning();
-  }
-}
-
 int main(int argc, char* argv[]) {
-  if (argc != 2) throw std::invalid_argument("Missing scene .obj file.");
-
-  tinyobj::ObjReader reader;
-  load_object(argv[1], reader);
-
-  auto& attrib = reader.GetAttrib();
-  auto& shapes = reader.GetShapes();
-  // auto& materials = reader.GetMaterials();
-
   // Create materials
   Color red(255, 0, 0);
   PhongMaterial phong_material(red, 0.2, 1, 0.5, 100);
+
+  std::vector<std::string> files(argv + 1, argv + argc);
+  std::vector<Object*> objects = object_loader(files, &phong_material);
+
+  // Get object from .obj
 
   // Create scene (camera + light)
   PointLight light(Point(5, 5, 5), Color(255, 255, 255), 1);
@@ -67,77 +40,11 @@ int main(int argc, char* argv[]) {
   Scene scene(camera, 1.5);
   scene.addLight(&light);
 
-  // Loop over shapes
-  for (size_t s = 0; s < shapes.size(); s++) {
-    // Loop over faces(polygon)
-    size_t index_offset = 0;
-    for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
-      size_t fv = size_t(shapes[s].mesh.num_face_vertices[f]);
-
-      // Create Triangle objects
-      tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + 0];
-      Point A(attrib.vertices[3 * size_t(idx.vertex_index) + 0],
-              attrib.vertices[3 * size_t(idx.vertex_index) + 1],
-              attrib.vertices[3 * size_t(idx.vertex_index) + 2]);
-      idx = shapes[s].mesh.indices[index_offset + 1];
-      Point B(attrib.vertices[3 * size_t(idx.vertex_index) + 0],
-              attrib.vertices[3 * size_t(idx.vertex_index) + 1],
-              attrib.vertices[3 * size_t(idx.vertex_index) + 2]);
-      idx = shapes[s].mesh.indices[index_offset + 2];
-      Point C(attrib.vertices[3 * size_t(idx.vertex_index) + 0],
-              attrib.vertices[3 * size_t(idx.vertex_index) + 1],
-              attrib.vertices[3 * size_t(idx.vertex_index) + 2]);
-      Triangle* triangle = new Triangle(A, B, C, &phong_material);
-      scene.addObject(triangle);
-
-      /*
-      // Loop over vertices in the face.
-      for (size_t v = 0; v < fv; v++) {
-        // access to vertex
-        tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
-        tinyobj::real_t vx = attrib.vertices[3 * size_t(idx.vertex_index) + 0];
-        tinyobj::real_t vy = attrib.vertices[3 * size_t(idx.vertex_index) + 1];
-        tinyobj::real_t vz = attrib.vertices[3 * size_t(idx.vertex_index) + 2];
-
-        // Check if `normal_index` is zero or positive. negative = no normal
-        // data
-        if (idx.normal_index >= 0) {
-          tinyobj::real_t nx = attrib.normals[3 * size_t(idx.normal_index) + 0];
-          tinyobj::real_t ny = attrib.normals[3 * size_t(idx.normal_index) + 1];
-          tinyobj::real_t nz = attrib.normals[3 * size_t(idx.normal_index) + 2];
-        }
-
-        // Check if `texcoord_index` is zero or positive. negative = no texcoord
-        // data
-        if (idx.texcoord_index >= 0) {
-          tinyobj::real_t tx =
-              attrib.texcoords[2 * size_t(idx.texcoord_index) + 0];
-          tinyobj::real_t ty =
-              attrib.texcoords[2 * size_t(idx.texcoord_index) + 1];
-        }
-
-        // Optional: vertex colors
-        // tinyobj::real_t red   = attrib.colors[3*size_t(idx.vertex_index)+0];
-        // tinyobj::real_t green = attrib.colors[3*size_t(idx.vertex_index)+1];
-        // tinyobj::real_t blue  = attrib.colors[3*size_t(idx.vertex_index)+2];
-      }
-      */
-
-      index_offset += fv;
-
-      // per-face material
-      // shapes[s].mesh.material_ids[f];
-    }
-  }
-
-  std::cout << scene.objects.size() << " triangles\n";
+  for (Object* object : objects) scene.addObject(object);
 
   Ray ray;
   std::optional<Intersection> intersection;
   Color color(0, 0, 0);
-
-  ray = Ray(Point(2, 0, -0.5), Vector(-1, 0, 0));
-  intersection = scene.intersectObject(ray);
 
   for (int i = 0; i < image.height; i++)
     for (int j = 0; j < image.width; j++) {
