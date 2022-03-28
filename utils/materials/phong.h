@@ -36,4 +36,8 @@ class PhongMaterial : public Texture_Material {
   double ks;     // Composante spéculaire
   double kr;     // Composante réflection
   double alpha;  // Brilliance
+
+ private:
+  Color get_reflection(const Intersection &intersection, const Scene &scene,
+                       int reflection_index);
 };

@@ -60,10 +60,8 @@ int main(int argc, char* argv[]) {
       intersection = scene.intersectObject(ray);
 
       if (intersection.has_value()) {
-        Intersection inter = intersection.value();
-        Object* obj = inter.object;
-        Texture_Material* mat = obj->get_material();
-        color = mat->get(intersection.value(), scene);
+        color = intersection.value().object->get_material()->get(
+            intersection.value(), scene);
       } else {
         color = scene.backgroundColor;
       }

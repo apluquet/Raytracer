@@ -13,11 +13,8 @@
 
 #include "utils/scene.h"
 
-Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
-                         int reflection_index) {
-  // AMBIENT
-  Color ambient = color * scene.ambientIntensity * ka;
-
+Color PhongMaterial::get_reflection(const Intersection &intersection,
+                                    const Scene &scene, int reflection_index) {
   Color reflection_color;
   if (reflection_index > 0 && kr > 0.0001) {
     // R = I - 2(N.I)N
@@ -34,16 +31,25 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
         scene.intersectObject(reflection_ray);
 
     if (reflection_intersection.has_value())
-      color = reflection_intersection.value().object->get_material()->get(
-          reflection_intersection.value(), scene, reflection_index - 1);
+      reflection_color =
+          reflection_intersection.value().object->get_material()->get(
+              reflection_intersection.value(), scene, reflection_index - 1);
     else
       reflection_color = scene.backgroundColor * kr;
   }
 
+  return reflection_color;
+}
+
+Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
+                         int reflection_index) {
+  // AMBIENT
+  Color ambient = color * scene.ambientIntensity * ka;
+
   Vector light_vector;
   Vector light_direction;
   Ray light_ray;
-  Vector reflection_vector;
+  Vector light_reflection;
   double cos_theta;  // Angle between light and normal
   double cos_omega;  // Angle between ray incident and reflection
   Color diffuse;
@@ -67,8 +73,8 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
 
     cos_theta = light_direction * intersection.normal;
     if (cos_theta < 0) cos_theta = 0;
-    reflection_vector = intersection.normal * 2 * cos_theta - light_direction;
-    cos_omega = reflection_vector * -intersection.ray.direction;
+    light_reflection = intersection.normal * 2 * cos_theta - light_direction;
+    cos_omega = light_reflection * -intersection.ray.direction;
     if (cos_omega < 0) cos_omega = 0;
 
     Color point_color = Color(light->get_color().red / 255. * color.red,
@@ -87,5 +93,6 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
                               pow(cos_omega, alpha) * ks;
   }
 
-  return ambient + diffuse + specular + reflection_color;
+  return ambient + diffuse + specular +
+         get_reflection(intersection, scene, reflection_index);
 }
