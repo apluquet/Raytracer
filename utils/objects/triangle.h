@@ -37,8 +37,7 @@ class Triangle : public Object {
 
   std::optional<Intersection> intersect(const Ray &ray) override;
   Vector normal(const Point &point) override;
-  Color get_texture(const Intersection &intersection,
-                    const Scene &scene) override;
+  Texture_Material *get_material() override;
   double get_potential(const Point &point) override;
 
   std::vector<Point> get_position() override;

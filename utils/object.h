@@ -43,8 +43,7 @@ class Object {
  public:
   virtual std::optional<Intersection> intersect(const Ray &ray) = 0;
   virtual Vector normal(const Point &point) = 0;
-  virtual Color get_texture(const Intersection &intersection,
-                            const Scene &scene) = 0;
+  virtual Texture_Material *get_material() = 0;
   virtual double get_potential(const Point &point) = 0;
 
   virtual std::vector<Point> get_position() = 0;
