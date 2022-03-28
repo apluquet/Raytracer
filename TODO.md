@@ -13,5 +13,6 @@ Normal shading: compute triangle normal using barycentric coordinates
 Use smart pointers
 Blob material: get material from object ?
 Obj and scene boundaries
+Free
 
 Update README
