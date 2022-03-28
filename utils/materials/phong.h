@@ -40,4 +40,6 @@ class PhongMaterial : public Texture_Material {
  private:
   Color get_reflection(const Intersection &intersection, const Scene &scene,
                        int reflection_index);
+  Color get_diffuse_and_specular(const Intersection &intersection,
+                                 const Scene &scene);
 };

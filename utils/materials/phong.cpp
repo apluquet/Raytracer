@@ -41,15 +41,12 @@ Color PhongMaterial::get_reflection(const Intersection &intersection,
   return reflection_color;
 }
 
-Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
-                         int reflection_index) {
-  // AMBIENT
-  Color ambient = color * scene.ambientIntensity * ka;
-
+Color PhongMaterial::get_diffuse_and_specular(const Intersection &intersection,
+                                              const Scene &scene) {
   Vector light_vector;
   Vector light_direction;
-  Ray light_ray;
   Vector light_reflection;
+  Ray light_ray;
   double cos_theta;  // Angle between light and normal
   double cos_omega;  // Angle between ray incident and reflection
   Color diffuse;
@@ -57,6 +54,7 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
   std::optional<Intersection> intersect_object;
 
   for (Light *light : scene.lights) {
+    // Compute ray from intersection to light
     light_vector = light->get_position() - intersection.point;
     light_direction = (light_vector).normalize();
     light_ray =
@@ -93,6 +91,14 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
                               pow(cos_omega, alpha) * ks;
   }
 
-  return ambient + diffuse + specular +
+  return diffuse + specular;
+}
+
+Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
+                         int reflection_index) {
+  // AMBIENT
+  Color ambient = color * scene.ambientIntensity * ka;
+
+  return ambient + get_diffuse_and_specular(intersection, scene) +
          get_reflection(intersection, scene, reflection_index);
 }
