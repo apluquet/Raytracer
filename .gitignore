@@ -52,3 +52,7 @@ images
 *.glb
 *.obj
 *.blend*
+
+# Dirty / In progress
+tests
+tinygltf
