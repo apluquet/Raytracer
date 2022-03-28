@@ -17,7 +17,6 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
                          int reflection_index) {
   // AMBIENT
   Color ambient = color * scene.ambientIntensity * ka;
-  // See if we do not hit another object
 
   Color reflection_color;
   if (reflection_index > 0 && kr > 0.0001) {
@@ -57,6 +56,7 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
     light_ray =
         Ray(intersection.point + light_direction * 0.00001, light_direction);
 
+    // See if we do not hit another object
     intersect_object = scene.intersectObject(light_ray, light_vector.length());
 
     if (intersect_object.has_value()) {
