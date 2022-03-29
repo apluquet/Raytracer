@@ -33,7 +33,8 @@ Color PhongMaterial::get_reflection(const Intersection &intersection,
     if (reflection_intersection.has_value())
       reflection_color =
           reflection_intersection.value().object->get_material()->get(
-              reflection_intersection.value(), scene, reflection_index - 1);
+              reflection_intersection.value(), scene, reflection_index - 1) *
+          kr;
     else
       reflection_color = scene.backgroundColor * kr;
   }
