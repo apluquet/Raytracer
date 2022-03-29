@@ -82,10 +82,7 @@ Vector Triangle::normal(const Point &point) {
   return normal;
 }
 
-Color Triangle::get_texture(const Intersection &intersection,
-                            const Scene &scene) {
-  return material->get(intersection, scene);
-}
+Texture_Material *Triangle::get_material() { return material; }
 
 double Triangle::get_potential(const Point &point) { return 0; }
 

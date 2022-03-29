@@ -20,12 +20,7 @@
 class Image {
  public:
   Image(std::size_t width, std::size_t height) : height(height), width(width) {
-    Color black = Color(0, 0, 0);
-    for (std::size_t i = 0; i < height; i++) {
-      std::vector<Color> line;
-      for (std::size_t j = 0; j < width; j++) line.push_back(black);
-      my_image.push_back(line);
-    }
+    my_image = std::vector(height, std::vector<Color>(width));
   }
 
   // Enregistre l'image au format ppm

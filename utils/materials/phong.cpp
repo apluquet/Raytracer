@@ -13,15 +13,41 @@
 
 #include "utils/scene.h"
 
-Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
-  // AMBIENT
-  Color ambient = color * scene.ambientIntensity * ka;
-  // See if we do not hit another object
+Color PhongMaterial::get_reflection(const Intersection &intersection,
+                                    const Scene &scene, int reflection_index) {
+  Color reflection_color;
+  if (reflection_index > 0 && kr > 0.0001) {
+    // R = I - 2(N.I)N
+    Vector reflection_vector =
+        intersection.ray.direction -
+        intersection.normal * 2 *
+            (intersection.normal * intersection.ray.direction);
 
+    reflection_vector = reflection_vector.normalize();
+
+    Ray reflection_ray(intersection.point + reflection_vector * 0.00001,
+                       reflection_vector);
+    std::optional<Intersection> reflection_intersection =
+        scene.intersectObject(reflection_ray);
+
+    if (reflection_intersection.has_value())
+      reflection_color =
+          reflection_intersection.value().object->get_material()->get(
+              reflection_intersection.value(), scene, reflection_index - 1) *
+          kr;
+    else
+      reflection_color = scene.backgroundColor * kr;
+  }
+
+  return reflection_color;
+}
+
+Color PhongMaterial::get_diffuse_and_specular(const Intersection &intersection,
+                                              const Scene &scene) {
   Vector light_vector;
   Vector light_direction;
+  Vector light_reflection;
   Ray light_ray;
-  Vector reflection;
   double cos_theta;  // Angle between light and normal
   double cos_omega;  // Angle between ray incident and reflection
   Color diffuse;
@@ -29,11 +55,13 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
   std::optional<Intersection> intersect_object;
 
   for (Light *light : scene.lights) {
+    // Compute ray from intersection to light
     light_vector = light->get_position() - intersection.point;
     light_direction = (light_vector).normalize();
     light_ray =
         Ray(intersection.point + light_direction * 0.00001, light_direction);
 
+    // See if we do not hit another object
     intersect_object = scene.intersectObject(light_ray, light_vector.length());
 
     if (intersect_object.has_value()) {
@@ -44,8 +72,8 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
 
     cos_theta = light_direction * intersection.normal;
     if (cos_theta < 0) cos_theta = 0;
-    reflection = intersection.normal * 2 * cos_theta - light_direction;
-    cos_omega = reflection * -intersection.ray.direction;
+    light_reflection = intersection.normal * 2 * cos_theta - light_direction;
+    cos_omega = light_reflection * -intersection.ray.direction;
     if (cos_omega < 0) cos_omega = 0;
 
     Color point_color = Color(light->get_color().red / 255. * color.red,
@@ -54,7 +82,6 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
 
     // DIFFUSE
     // I_d = i_d k_d (L.N) = i_d k_d cos(theta)
-
     diffuse = diffuse + point_color * cos_theta * light->get_intensity() * kd;
 
     // SPECULAR
@@ -65,5 +92,14 @@ Color PhongMaterial::get(const Intersection &intersection, const Scene &scene) {
                               pow(cos_omega, alpha) * ks;
   }
 
-  return ambient + diffuse + specular;
+  return diffuse + specular;
+}
+
+Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
+                         int reflection_index) {
+  // AMBIENT
+  Color ambient = color * scene.ambientIntensity * ka;
+
+  return ambient + get_diffuse_and_specular(intersection, scene) +
+         get_reflection(intersection, scene, reflection_index);
 }

@@ -18,7 +18,9 @@
 // Sphere : dot((P - C), (P - C)) = r²
 // Ray : p(t) = O + tD
 std::optional<Intersection> Sphere::intersect(const Ray &ray) {
-  if (round(ray.direction.length()) != 1) throw;
+  if (round(ray.direction.length()) != 1)
+    throw std::logic_error(
+        "Spere::intersect: ray.direction should be normalized.");
   // else a = ray.direction * ray.direction = 1 * 1 * cos(0) = 1
 
   Vector diff = ray.origin - center;
@@ -57,10 +59,7 @@ std::optional<Intersection> Sphere::intersect(const Ray &ray) {
 
 Vector Sphere::normal(const Point &point) { return point - center; }
 
-Color Sphere::get_texture(const Intersection &intersection,
-                          const Scene &scene) {
-  return material->get(intersection, scene);
-}
+Texture_Material *Sphere::get_material() { return material; }
 
 double Sphere::get_potential(const Point &point) {
   return (point - center).length() < radius;
