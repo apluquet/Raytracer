@@ -22,7 +22,14 @@ class Triangle : public Object {
  public:
   Triangle(const Point &A, const Point &B, const Point &C,
            Texture_Material *material)
-      : A(A), B(B), C(C), material(material) {}
+      : A(A), B(B), C(C), material(material) {
+    // Computed hard normal, triangle is flat
+    Vector AB = B - A;
+    Vector AC = C - A;
+    normal_A = AB ^ AC;
+    normal_B = normal_A;
+    normal_C = normal_C;
+  }
 
   Triangle(const Point &A, const Point &B, const Point &C,
            const Vector &normal_A, const Vector &normal_B,

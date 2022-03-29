@@ -58,27 +58,27 @@ std::vector<Object*> object_loader(const std::vector<std::string>& files,
                 attrib.vertices[3 * size_t(idx.vertex_index) + 1],
                 attrib.vertices[3 * size_t(idx.vertex_index) + 2]);
 
-        Vector normal_A(attrib.normals[3 * size_t(idx.vertex_index) + 0],
-                        attrib.normals[3 * size_t(idx.vertex_index) + 1],
-                        attrib.normals[3 * size_t(idx.vertex_index) + 2]);
+        Vector normal_A(attrib.normals[3 * size_t(idx.normal_index) + 0],
+                        attrib.normals[3 * size_t(idx.normal_index) + 1],
+                        attrib.normals[3 * size_t(idx.normal_index) + 2]);
 
         idx = shapes[s].mesh.indices[index_offset + 1];
 
         Point B(attrib.vertices[3 * size_t(idx.vertex_index) + 0],
                 attrib.vertices[3 * size_t(idx.vertex_index) + 1],
                 attrib.vertices[3 * size_t(idx.vertex_index) + 2]);
-        Vector normal_B(attrib.normals[3 * size_t(idx.vertex_index) + 0],
-                        attrib.normals[3 * size_t(idx.vertex_index) + 1],
-                        attrib.normals[3 * size_t(idx.vertex_index) + 2]);
+        Vector normal_B(attrib.normals[3 * size_t(idx.normal_index) + 0],
+                        attrib.normals[3 * size_t(idx.normal_index) + 1],
+                        attrib.normals[3 * size_t(idx.normal_index) + 2]);
 
         idx = shapes[s].mesh.indices[index_offset + 2];
 
         Point C(attrib.vertices[3 * size_t(idx.vertex_index) + 0],
                 attrib.vertices[3 * size_t(idx.vertex_index) + 1],
                 attrib.vertices[3 * size_t(idx.vertex_index) + 2]);
-        Vector normal_C(attrib.normals[3 * size_t(idx.vertex_index) + 0],
-                        attrib.normals[3 * size_t(idx.vertex_index) + 1],
-                        attrib.normals[3 * size_t(idx.vertex_index) + 2]);
+        Vector normal_C(attrib.normals[3 * size_t(idx.normal_index) + 0],
+                        attrib.normals[3 * size_t(idx.normal_index) + 1],
+                        attrib.normals[3 * size_t(idx.normal_index) + 2]);
 
         objects.push_back(
             new Triangle(A, B, C, normal_A, normal_B, normal_C, material));

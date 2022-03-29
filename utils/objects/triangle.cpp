@@ -64,10 +64,21 @@ std::optional<Intersection> Triangle::intersect(const Ray &ray) {
 }
 
 Vector Triangle::normal(const Point &point) {
-  Vector AB = B - A;
-  Vector AC = C - A;
-  Vector normal = AB ^ AC;
+  if (normal_A == normal_B && normal_B == normal_C)
+    // Computed hard normal, triangle is flat
+    return normal_A;
 
+  // Barycentric coordinates
+  double ABCarea = (((B - A) ^ (C - A)).length()) / 2;
+  double CAParea = (((A - C) ^ (point - C)).length()) / 2;
+  double ABParea = (((B - A) ^ (point - A)).length()) / 2;
+  double BCParea = (((C - B) ^ (point - B)).length()) / 2;
+
+  double u = CAParea / ABCarea;
+  double v = ABParea / ABCarea;
+  double w = BCParea / ABCarea;
+
+  Vector normal = normal_A * w + normal_B * u + normal_C * v;
   return normal;
 }
 
