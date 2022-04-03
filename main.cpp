@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
   // Image image(2, 2);
   Camera camera(Point(3, 0, 0), Vector(-1, 0, 0), Vector(0, 0, 1), 1, 120, 90,
                 image);
-  Scene scene(camera, 1.5);
+  Scene scene(camera, 1.5, Color(0., 0., 0.));
   scene.addLight(&light);
   scene.addObject(&sphere);
 

@@ -22,8 +22,11 @@ class Texture_Material;
 
 class Scene {
  public:
-  explicit Scene(const Camera &camera, const double &ambientIntensity)
-      : camera(camera), ambientIntensity(ambientIntensity) {}
+  explicit Scene(const Camera &camera, const double &ambientIntensity,
+                 const Color &backgroundColor)
+      : camera(camera),
+        ambientIntensity(ambientIntensity),
+        backgroundColor(backgroundColor) {}
 
   void addObject(Object *object);
   void addLight(Light *light);
@@ -39,6 +42,6 @@ class Scene {
   std::list<Object *> objects;
   std::list<Light *> lights;
   double ambientIntensity;  // [0,1]
-  Color backgroundColor = Color(0., 0., 0.);
+  Color backgroundColor;
   Camera camera;
 };
