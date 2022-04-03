@@ -17,15 +17,21 @@ class CartoonMaterial : public Texture_Material {
  public:
   explicit CartoonMaterial(const Color &color, const double &ka,
                            const double &kd, const double &ks,
-                           const double &alpha)
-      : color(color), ka(ka), kd(kd), ks(ks), alpha(alpha) {
+                           const double &alpha, int n_shades = 2)
+      : color(color), ka(ka), kd(kd), ks(ks), alpha(alpha), n_shades(n_shades) {
     kr = 0;
   }
 
   explicit CartoonMaterial(const Color &color, const double &ka,
                            const double &kd, const double &ks, const double &kr,
-                           const double &alpha)
-      : color(color), ka(ka), kd(kd), ks(ks), kr(kr), alpha(alpha) {}
+                           const double &alpha, int n_shades = 2)
+      : color(color),
+        ka(ka),
+        kd(kd),
+        ks(ks),
+        kr(kr),
+        alpha(alpha),
+        n_shades(n_shades) {}
 
   Color get(const Intersection &intersection, const Scene &scene,
             int reflection_index = 5);
@@ -37,6 +43,7 @@ class CartoonMaterial : public Texture_Material {
   double ks;     // Composante spéculaire
   double kr;     // Composante réflection
   double alpha;  // Brilliance
+  int n_shades;  // Nombre de nuances possibles par couleur.
 
  private:
   Color get_reflection(const Intersection &intersection, const Scene &scene,

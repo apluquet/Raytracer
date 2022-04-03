@@ -11,6 +11,8 @@
 
 #include "utils/materials/cartoon.h"
 
+#include <algorithm>
+
 #include "utils/scene.h"
 
 Color CartoonMaterial::get_reflection(const Intersection &intersection,
@@ -67,11 +69,18 @@ Color CartoonMaterial::get_diffuse_and_specular(
                               pow(cos_omega, alpha) * ks;
   }
 
+  // Returns a white color
   if (specular.red + specular.green + specular.blue > 0.3)
     return Color(1, 1, 1);
 
-  if (diffuse.red + diffuse.green + diffuse.blue <= 0.2)
-    return color * Color(0.5, 0.5, 0.5);
+  // double color_mean = (diffuse.red + diffuse.green + diffuse.blue) / 3;
+  double color_mean =
+      std::max(diffuse.red, std::max(diffuse.blue, diffuse.green));
+  // Computes the color with the number of shades
+  double step = 1. / n_shades;
+  for (int i = 1; i < n_shades; i++) {
+    if (color_mean < (i * step / 7)) return color * Color(1, 1, 1) * (i * step);
+  }
   return color;
 }
 
