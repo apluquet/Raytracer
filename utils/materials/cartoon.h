@@ -24,19 +24,22 @@ class CartoonMaterial : public Texture_Material {
 
   explicit CartoonMaterial(const Color &color, const double &ka,
                            const double &kd, const double &ks, const double &kr,
-                           const double &alpha, int n_shades = 2)
+                           const double &alpha, int n_shades = 2,
+                           const Color &outline_color = Color(0, 0, 0))
       : color(color),
         ka(ka),
         kd(kd),
         ks(ks),
         kr(kr),
         alpha(alpha),
-        n_shades(n_shades) {}
+        n_shades(n_shades),
+        outline_color(outline_color) {}
 
   Color get(const Intersection &intersection, const Scene &scene,
             int reflection_index = 5);
 
   Color color;
+  Color outline_color;
 
   double ka;     // Composante ambiante
   double kd;     // Composante diffuse
@@ -50,4 +53,6 @@ class CartoonMaterial : public Texture_Material {
                        int reflection_index);
   Color get_diffuse_and_specular(const Intersection &intersection,
                                  const Scene &scene);
+  std::optional<Color> get_outline(const Intersection &intersection,
+                                   const Scene &scene);
 };

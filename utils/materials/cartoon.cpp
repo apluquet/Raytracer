@@ -21,6 +21,26 @@ Color CartoonMaterial::get_reflection(const Intersection &intersection,
   return Color(0, 0, 0);
 }
 
+std::optional<Color> CartoonMaterial::get_outline(
+    const Intersection &intersection, const Scene &scene) {
+  double shadow_thick = 0.3;
+  double light_thick = 0.2;
+
+  // Light direction
+  Vector light_vector = scene.lights[0]->get_position() - intersection.point;
+  Vector light_direction = (light_vector).normalize();
+
+  double camera_alignment = -intersection.ray.direction * intersection.normal;
+  double light_alignment = std::max(0., intersection.normal * light_direction);
+
+  double interpolation =
+      shadow_thick + (light_thick - shadow_thick) * light_alignment;
+
+  if (camera_alignment < interpolation)
+    return scene.lights[0]->get_color() * outline_color;
+  return std::nullopt;
+}
+
 Color CartoonMaterial::get_diffuse_and_specular(
     const Intersection &intersection, const Scene &scene) {
   Vector light_vector;
@@ -89,6 +109,8 @@ Color CartoonMaterial::get(const Intersection &intersection, const Scene &scene,
   // AMBIENT
   Color ambient = color * scene.ambientIntensity * ka;
 
+  std::optional<Color> outline = get_outline(intersection, scene);
+  if (outline.has_value()) return outline.value();
   return ambient + get_diffuse_and_specular(intersection, scene) +
          get_reflection(intersection, scene, reflection_index);
 }
