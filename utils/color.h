@@ -24,9 +24,6 @@
 #define COLOR_INT_MIN 0
 #define COLOR_INT_MAX 255
 
-static bool isRgbInt(int color) {
-  return COLOR_INT_MIN <= color && color <= COLOR_INT_MAX;
-}
 static bool isRgbDouble(double color) {
   return COLOR_MIN <= color && color <= COLOR_MAX;
 }
