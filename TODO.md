@@ -12,5 +12,6 @@ Use smart pointers
 Blob material: get material from object ?
 Obj and scene boundaries
 Free
+Change FOV compute to avoid distorted image
 
 Update README
