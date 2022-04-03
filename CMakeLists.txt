@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD 20)
 
 # Notre projet est étiqueté hello
 project(raytracer)
@@ -44,5 +44,5 @@ set(HEADERS
     utils/vector.h
     )
 
-add_compile_options(-g -O3)
+add_compile_options(-g -O3 -march=native)
 add_executable(raytracer ${SRCS} ${HEADERS})

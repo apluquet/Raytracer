@@ -36,6 +36,9 @@ class Scene {
 
   double get_potential(const Point &point) const;
 
+  void renderLines(int start, int end);
+  void render(bool multithreading = true);
+
   // void deleteObject(Object object);
   // void deleteLight(Light light);
 
