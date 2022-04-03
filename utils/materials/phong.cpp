@@ -76,9 +76,7 @@ Color PhongMaterial::get_diffuse_and_specular(const Intersection &intersection,
     cos_omega = light_reflection * -intersection.ray.direction;
     if (cos_omega < 0) cos_omega = 0;
 
-    Color point_color = Color(light->get_color().red / 255. * color.red,
-                              light->get_color().green / 255. * color.green,
-                              light->get_color().blue / 255. * color.blue);
+    Color point_color = light->get_color() * color;
 
     // DIFFUSE
     // I_d = i_d k_d (L.N) = i_d k_d cos(theta)
