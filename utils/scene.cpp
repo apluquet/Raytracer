@@ -11,6 +11,8 @@
 
 #include "utils/scene.h"
 
+#include <thread>  // NOLINT [build/c++11]
+
 void Scene::addObject(Object *object) { objects.push_back(object); }
 
 void Scene::addLight(Light *light) { lights.push_back(light); }
@@ -47,12 +49,12 @@ double Scene::get_potential(const Point &point) const {
   return potential;
 }
 
-void Scene::render() {
+void Scene::renderLines(int start, int end) {
   Ray ray;
   std::optional<Intersection> intersection;
   Color color(0., 0., 0.);
 
-  for (int i = 0; i < camera.image.height; i++)
+  for (int i = start; i < end; i++)
     for (int j = 0; j < camera.image.width; j++) {
       ray = camera.cast_ray(j, i);
       intersection = intersectObject(ray);
@@ -65,4 +67,26 @@ void Scene::render() {
       }
       camera.image.my_image[i][j] = color;
     }
+}
+
+void Scene::render(bool multithreading) {
+  if (multithreading) {
+    unsigned int nb_thread = std::jthread::hardware_concurrency();
+    int lines_per_thread = camera.image.height / nb_thread;
+    std::jthread threads[nb_thread];
+
+    for (int i = 0; i < nb_thread - 1; i++) {
+      threads[i] = std::jthread(&Scene::renderLines, this, i * lines_per_thread,
+                                (i + 1) * lines_per_thread);
+    }
+
+    // Last thread takes the undividable lines.
+    threads[nb_thread - 1] =
+        std::jthread(&Scene::renderLines, this,
+                     (nb_thread - 1) * lines_per_thread, camera.image.height);
+
+    for (int i = 0; i < nb_thread; i++) threads[i].join();
+  } else {
+    renderLines(0, camera.image.height);
+  }
 }

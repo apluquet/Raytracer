@@ -35,9 +35,9 @@ int main(int argc, char* argv[]) {
 
   // Create scene (camera + light)
   PointLight light(Point(5, 5, 5), Color(1., 1., 1.), 1);
-  Image image(1920 / 4, 1080 / 4);
-  // Image image(2, 2);
-  Camera camera(Point(3, 0, 0), image, Vector(-1, 0, 0), Vector(0, 0, 1), 1,
+  Image image(1920 / 2, 1080 / 2);
+  // Image image(480, 270);
+  Camera camera(Point(5, 0, 0), image, Vector(-1, 0, 0), Vector(0, 0, 1), 1,
                 120, 90);
   Scene scene(camera, 1.5, Color(0., 0., 0.));
   scene.addLight(&light);
