@@ -10,7 +10,7 @@
  */
 #pragma once
 
-#include <list>
+#include <vector>
 
 #include "utils/camera.h"
 #include "utils/light.h"
@@ -39,8 +39,8 @@ class Scene {
   // void deleteObject(Object object);
   // void deleteLight(Light light);
 
-  std::list<Object *> objects;
-  std::list<Light *> lights;
+  std::vector<Object *> objects;
+  std::vector<Light *> lights;
   double ambientIntensity;  // [0,1]
   Color backgroundColor;
   Camera camera;
