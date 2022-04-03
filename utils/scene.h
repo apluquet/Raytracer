@@ -39,6 +39,6 @@ class Scene {
   std::list<Object *> objects;
   std::list<Light *> lights;
   double ambientIntensity;  // [0,1]
-  Color backgroundColor = Color(0, 0, 255);
+  Color backgroundColor = Color(0., 0., 0.);
   Camera camera;
 };

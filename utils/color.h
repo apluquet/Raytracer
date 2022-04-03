@@ -14,18 +14,46 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <iostream>
+#include <limits>
+#include <sstream>
+#include <stdexcept>
+
+#define COLOR_MIN 0.
+#define COLOR_MAX 1.
+#define COLOR_INT_MIN 0
+#define COLOR_INT_MAX 255
+
+static bool isRgbInt(int color) {
+  return COLOR_INT_MIN <= color && color <= COLOR_INT_MAX;
+}
+static bool isRgbDouble(double color) {
+  return COLOR_MIN <= color && color <= COLOR_MAX;
+}
+
+static bool almostEqual(double a, double b) {
+  return std::fabs(a - b) < std::numeric_limits<double>::epsilon();
+}
 
 class Color {
  public:
   Color() : red(0), green(0), blue(0) {}
-  Color(size_t red, size_t green, size_t blue)
-      : red(red), green(green), blue(blue) {}
+
+  Color(double red, double green, double blue)
+      : red(red), green(green), blue(blue) {
+    if (!isRgbDouble(red) || !isRgbDouble(green) || !isRgbDouble(blue)) {
+      std::stringstream errorMessage;
+      errorMessage << "To initialize a Color with integers, components should "
+                      "be in [0.; 1.], got : "
+                   << red << " " << green << " " << blue;
+      throw std::logic_error(errorMessage.str());
+    }
+  }
 
   Color operator+(const Color &other) const {
-    size_t max = 255;
-    return Color(std::min(red + other.red, max),
-                 std::min(green + other.green, max),
-                 std::min(blue + other.blue, max));
+    return Color(std::min(red + other.red, COLOR_MAX),
+                 std::min(green + other.green, COLOR_MAX),
+                 std::min(blue + other.blue, COLOR_MAX));
   }
 
   Color operator*(const Color &other) const {
@@ -33,14 +61,21 @@ class Color {
   }
 
   Color operator*(const double &value) const {
-    return Color(red * value, green * value, blue * value);
+    return Color(std::min(red * value, COLOR_MAX),
+                 std::min(green * value, COLOR_MAX),
+                 std::min(blue * value, COLOR_MAX));
   }
 
   Color operator==(const Color &other) const {
-    return Color(red == other.red, green == other.green, blue == other.green);
+    return Color(almostEqual(red, other.red), almostEqual(green, other.green),
+                 almostEqual(blue, other.blue));
   }
 
-  size_t red;
-  size_t green;
-  size_t blue;
+  int getRedRgb() { return red * COLOR_INT_MAX; }
+  int getGreenRgb() { return green * COLOR_INT_MAX; }
+  int getBlueRgb() { return blue * COLOR_INT_MAX; }
+
+  double red;
+  double green;
+  double blue;
 };

@@ -24,10 +24,10 @@
 
 int main(int argc, char* argv[]) {
   // Create materials
-  Color red(255, 0, 0);
-  Color green(0, 255, 0);
+  Color red(1., 0., 0.);
+  Color green(0., 1., 0.);
   PhongMaterial phong_material(green, 0.2, 0.5, 0.3, 100);
-  PhongMaterial phong_reflect(red, 0.2, 0.8, 0.2, 0.1, 100);
+  PhongMaterial phong_reflect(red, 0.2, 0.8, 0.2, 0.5, 100);
 
   // Get object from .obj
   std::vector<std::string> files(argv + 1, argv + argc);
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
   Sphere sphere = Sphere(sphere_center, sphere_radius, &phong_material);
 
   // Create scene (camera + light)
-  PointLight light(Point(5, 5, 5), Color(255, 255, 255), 1);
+  PointLight light(Point(5, 5, 5), Color(1., 1., 1.), 1);
   Image image(1920 / 4, 1080 / 4);
   // Image image(2, 2);
   Camera camera(Point(3, 0, 0), Vector(-1, 0, 0), Vector(0, 0, 1), 1, 120, 90,
@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 
   Ray ray;
   std::optional<Intersection> intersection;
-  Color color(0, 0, 0);
+  Color color(0., 0., 0.);
 
   for (int i = 0; i < image.height; i++)
     for (int j = 0; j < image.width; j++) {
