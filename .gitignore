@@ -45,6 +45,7 @@ build
 
 # Binary 
 images
+scenes
 *.ppm
 *.bin
 *.gltf
@@ -52,6 +53,8 @@ images
 *.glb
 *.obj
 *.blend*
+*.jpg
+*.png
 
 # Dirty / In progress
 tests
