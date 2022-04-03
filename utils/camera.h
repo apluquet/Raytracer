@@ -20,10 +20,10 @@
 
 class Camera {
  public:
-  Camera(const Point &position, const Vector &direction, const Vector &up,
-         const double &z_min, const float &view_angle_x,
-         const float &view_angle_y, const Image &image)
-      : position(position) {
+  Camera(const Point &position, const Image &image, const Vector &direction,
+         const Vector &up, const double &z_min, const float &view_angle_x,
+         const float &view_angle_y)
+      : position(position), image(image) {
     // demi-height and demi-width are respectively the half of the height
     // and width of the image plan.
     double demi_height = tan((view_angle_y / 2) * PI / 180) * z_min;
@@ -45,7 +45,8 @@ class Camera {
 
   Ray cast_ray(const double &x, const double &y);
 
-  Point position;      // Camera position
+  Point position;  // Camera position
+  Image image;
   Point image_origin;  // Top left corner of our image
   Vector image_down;   // Unit vector for a pixel height
   Vector image_right;  // Unit vecto for a pixel width

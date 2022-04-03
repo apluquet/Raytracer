@@ -36,6 +36,8 @@ class Scene {
 
   double get_potential(const Point &point) const;
 
+  void render();
+
   // void deleteObject(Object object);
   // void deleteLight(Light light);
 

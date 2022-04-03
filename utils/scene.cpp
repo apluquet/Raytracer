@@ -46,3 +46,23 @@ double Scene::get_potential(const Point &point) const {
 
   return potential;
 }
+
+void Scene::render() {
+  Ray ray;
+  std::optional<Intersection> intersection;
+  Color color(0., 0., 0.);
+
+  for (int i = 0; i < camera.image.height; i++)
+    for (int j = 0; j < camera.image.width; j++) {
+      ray = camera.cast_ray(j, i);
+      intersection = intersectObject(ray);
+
+      if (intersection.has_value()) {
+        color = intersection.value().object->get_material()->get(
+            intersection.value(), *this);
+      } else {
+        color = backgroundColor;
+      }
+      camera.image.my_image[i][j] = color;
+    }
+}
