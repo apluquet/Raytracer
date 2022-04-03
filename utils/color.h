@@ -68,9 +68,9 @@ class Color {
                  almostEqual(blue, other.blue));
   }
 
-  int getRedRgb() { return red * COLOR_INT_MAX; }
-  int getGreenRgb() { return green * COLOR_INT_MAX; }
-  int getBlueRgb() { return blue * COLOR_INT_MAX; }
+  int getRedInt() { return red * COLOR_INT_MAX; }
+  int getGreenInt() { return green * COLOR_INT_MAX; }
+  int getBlueInt() { return blue * COLOR_INT_MAX; }
 
   double red;
   double green;

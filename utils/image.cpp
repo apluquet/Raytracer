@@ -18,8 +18,8 @@ void Image::to_ppm() {
     ofs << "P3 " << width << " " << height << " 255" << std::endl;
     for (std::size_t i = 0; i < height; i++) {
       for (std::size_t j = 0; j < width; j++)
-        ofs << my_image[i][j].getRedRgb() << " " << my_image[i][j].getGreenRgb()
-            << " " << my_image[i][j].getBlueRgb() << " ";
+        ofs << my_image[i][j].getRedInt() << " " << my_image[i][j].getGreenInt()
+            << " " << my_image[i][j].getBlueInt() << " ";
       ofs << std::endl;
     }
     ofs.close();
