@@ -73,20 +73,28 @@ void Scene::render(bool multithreading) {
   if (multithreading) {
     unsigned int nb_thread = std::jthread::hardware_concurrency();
     int lines_per_thread = camera.image.height / nb_thread;
-    std::jthread threads[nb_thread];
 
-    for (int i = 0; i < nb_thread - 1; i++) {
-      threads[i] = std::jthread(&Scene::renderLines, this, i * lines_per_thread,
-                                (i + 1) * lines_per_thread);
+    // Check that the number of threads is not too big compared too the number
+    // of lines.
+    if (lines_per_thread > 0) {
+      std::jthread threads[nb_thread];
+
+      for (int i = 0; i < nb_thread - 1; i++) {
+        threads[i] =
+            std::jthread(&Scene::renderLines, this, i * lines_per_thread,
+                         (i + 1) * lines_per_thread);
+      }
+
+      // Last thread takes the undividable lines.
+      threads[nb_thread - 1] =
+          std::jthread(&Scene::renderLines, this,
+                       (nb_thread - 1) * lines_per_thread, camera.image.height);
+
+      for (int i = 0; i < nb_thread; i++) threads[i].join();
+      return;
     }
-
-    // Last thread takes the undividable lines.
-    threads[nb_thread - 1] =
-        std::jthread(&Scene::renderLines, this,
-                     (nb_thread - 1) * lines_per_thread, camera.image.height);
-
-    for (int i = 0; i < nb_thread; i++) threads[i].join();
-  } else {
-    renderLines(0, camera.image.height);
   }
+
+  // If multithreading was not performed, render the entire image.
+  renderLines(0, camera.image.height);
 }
