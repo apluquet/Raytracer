@@ -16,6 +16,7 @@ set(SRCS
     utils/camera.cpp
     utils/image.cpp
     utils/materials/phong.cpp
+    utils/materials/cartoon.cpp
     utils/object_loader.cpp
     utils/objects/sphere.cpp 
     utils/objects/triangle.cpp
@@ -34,6 +35,7 @@ set(HEADERS
     utils/light.h
     utils/material.h
     utils/materials/phong.h
+    utils/materials/cartoon.h
     utils/object.h
     utils/object_loader.h
     utils/objects/sphere.h

@@ -53,6 +53,12 @@ class Color {
                  std::min(blue + other.blue, COLOR_MAX));
   }
 
+  Color operator-(const Color &other) const {
+    return Color(std::max(red - other.red, COLOR_MIN),
+                 std::max(green - other.green, COLOR_MIN),
+                 std::max(blue - other.blue, COLOR_MIN));
+  }
+
   Color operator*(const Color &other) const {
     return Color(red * other.red, green * other.green, blue * other.blue);
   }
