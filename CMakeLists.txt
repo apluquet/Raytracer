@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.0)
-
 set (CMAKE_CXX_STANDARD 20)
 
 # Notre projet est étiqueté hello
@@ -47,4 +46,5 @@ set(HEADERS
     )
 
 add_compile_options(-g -O3 -march=native)
+add_link_options(-pthread)
 add_executable(raytracer ${SRCS} ${HEADERS})
