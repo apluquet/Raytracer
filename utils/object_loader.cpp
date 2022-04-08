@@ -48,14 +48,20 @@ std::vector<Object*> object_loader(const std::vector<std::string>& files,
     auto& materials = reader.GetMaterials();
 
     std::vector<Texture_Material*> our_materials;
-    for (size_t i = 0; i < materials.size(); i++) {
-      our_materials.push_back(new PhongMaterial(
-          Color(materials[i].diffuse[0], materials[i].diffuse[1],
-                materials[i].diffuse[2]),
-          0.2, 0.8, 0.3, 150));
+    if (material == nullptr) {
+      for (size_t i = 0; i < materials.size(); i++) {
+        our_materials.push_back(new PhongMaterial(
+            Color(materials[i].diffuse[0], materials[i].diffuse[1],
+                  materials[i].diffuse[2]),
+            0.2, 0.8, 0.3, 150));
 
-      // CartoonMaterial(material.ambient, material.ambient,
-      //  material.diffuse, material.specular, material.shininess)));
+        // CartoonMaterial(material.ambient, material.ambient,
+        //  material.diffuse, material.specular, material.shininess)));
+      }
+    } else {
+      // If we gave a metrial, we will use it istead of all the materials in the
+      // .mtl.
+      our_materials = std::vector(materials.size(), material);
     }
 
     // Loop over shapes
