@@ -14,6 +14,8 @@
 #define TINYOBJLOADER_IMPLEMENTATION  // define this in only *one* .cc
 
 #include "tinyobjloader/tiny_obj_loader.h"
+#include "utils/materials/cartoon.h"
+#include "utils/materials/phong.h"
 #include "utils/objects/triangle.h"
 
 static void object_parser(const std::string& inputfile,
@@ -43,6 +45,18 @@ std::vector<Object*> object_loader(const std::vector<std::string>& files,
 
     auto& attrib = reader.GetAttrib();
     auto& shapes = reader.GetShapes();
+    auto& materials = reader.GetMaterials();
+
+    std::vector<Texture_Material*> our_materials;
+    for (size_t i = 0; i < materials.size(); i++) {
+      our_materials.push_back(new PhongMaterial(
+          Color(materials[i].diffuse[0], materials[i].diffuse[1],
+                materials[i].diffuse[2]),
+          0.2, 0.8, 0.3, 150));
+
+      // CartoonMaterial(material.ambient, material.ambient,
+      //  material.diffuse, material.specular, material.shininess)));
+    }
 
     // Loop over shapes
     for (size_t s = 0; s < shapes.size(); s++) {
@@ -80,8 +94,12 @@ std::vector<Object*> object_loader(const std::vector<std::string>& files,
                         attrib.normals[3 * size_t(idx.normal_index) + 1],
                         attrib.normals[3 * size_t(idx.normal_index) + 2]);
 
-        objects.push_back(
-            new Triangle(A, B, C, normal_A, normal_B, normal_C, material));
+        // Material
+        int material_id = shapes[s].mesh.material_ids[f];
+        std::cout << materials[material_id].name << std::endl;
+
+        objects.push_back(new Triangle(A, B, C, normal_A, normal_B, normal_C,
+                                       our_materials[material_id]));
 
         index_offset += fv;
       }
