@@ -14,7 +14,13 @@
 #define TINYOBJLOADER_IMPLEMENTATION  // define this in only *one* .cc
 
 #include "tinyobjloader/tiny_obj_loader.h"
+#include "utils/materials/cartoon.h"
+#include "utils/materials/phong.h"
 #include "utils/objects/triangle.h"
+
+#define KA 0.2
+#define KD 0.8
+#define KS 0.3
 
 static void object_parser(const std::string& inputfile,
                           tinyobj::ObjReader& reader) {
@@ -33,7 +39,7 @@ static void object_parser(const std::string& inputfile,
 }
 
 std::vector<Object*> object_loader(const std::vector<std::string>& files,
-                                   Texture_Material* material) {
+                                   Texture_Material* material, char style) {
   std::vector<Object*> objects;
   int last_size = 0;
 
@@ -43,6 +49,41 @@ std::vector<Object*> object_loader(const std::vector<std::string>& files,
 
     auto& attrib = reader.GetAttrib();
     auto& shapes = reader.GetShapes();
+    auto& materials = reader.GetMaterials();
+
+    std::vector<Texture_Material*> our_materials;
+    if (material == nullptr) {
+      for (size_t i = 0; i < materials.size(); i++) {
+        Color color = Color(materials[i].diffuse[0], materials[i].diffuse[1],
+                            materials[i].diffuse[2]);
+
+        Texture_Material* material_ptr;
+
+        switch (style) {
+          case 'c':  // Cartoon
+            material_ptr =
+                new CartoonMaterial(color, KA, KD, KS, materials[i].shininess);
+            break;
+          case 'p':  // Phong
+            material_ptr = new PhongMaterial(color, KA, KD, KS,
+                                             materials[i].shininess / 1000,
+                                             materials[i].shininess);
+            break;
+          case 'u':  // Uniform
+            material_ptr = new Uniform_Texture(color);
+            break;
+          default:
+            throw std::logic_error(
+                "This style does not exist. Please sekect between 'c', 'p' and "
+                "'u'.");
+        }
+        our_materials.push_back(material_ptr);
+      }
+    } else {
+      // If we gave a metrial, we will use it istead of all the materials in the
+      // .mtl.
+      our_materials = std::vector(materials.size(), material);
+    }
 
     // Loop over shapes
     for (size_t s = 0; s < shapes.size(); s++) {
@@ -80,8 +121,10 @@ std::vector<Object*> object_loader(const std::vector<std::string>& files,
                         attrib.normals[3 * size_t(idx.normal_index) + 1],
                         attrib.normals[3 * size_t(idx.normal_index) + 2]);
 
-        objects.push_back(
-            new Triangle(A, B, C, normal_A, normal_B, normal_C, material));
+        // Material
+        int material_id = shapes[s].mesh.material_ids[f];
+        objects.push_back(new Triangle(A, B, C, normal_A, normal_B, normal_C,
+                                       our_materials[material_id]));
 
         index_offset += fv;
       }
