@@ -13,9 +13,11 @@
 
 #include <cstdio>
 #include <fstream>
+#include <string>
 #include <vector>
 
 #include "utils/color.h"
+#include "utils/libs/stb_image.h"
 
 class Image {
  public:
@@ -23,9 +25,19 @@ class Image {
     my_image = std::vector(height, std::vector<Color>(width));
   }
 
+  explicit Image(std::string path) { from_png(path); }
+
   // Enregistre l'image au format ppm
   void to_ppm();
 
+  // Récupère un pixel de notre image
+  Color get_pixel(int x, int y);
+
+ private:
+  // Récupère l'image depuis un fichier png
+  void from_png(std::string path);
+
+ public:
   std::size_t height;
   std::size_t width;
   std::vector<std::vector<Color>> my_image;
