@@ -32,6 +32,7 @@ set(HEADERS
     utils/color.h 
     utils/image.h 
     utils/intersection.h
+    utils/libs/stb_image.h
     utils/light.h
     utils/material.h
     utils/materials/cartoon.h
