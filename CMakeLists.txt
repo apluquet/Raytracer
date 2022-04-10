@@ -14,8 +14,9 @@ set(SRCS
     utils/blob.cpp
     utils/camera.cpp
     utils/image.cpp
-    utils/materials/phong.cpp
     utils/materials/cartoon.cpp
+    utils/materials/phong.cpp
+    utils/materials/uvSphere.cpp
     utils/object_loader.cpp
     utils/objects/aabb.cpp
     utils/objects/sphere.cpp 
@@ -37,6 +38,7 @@ set(HEADERS
     utils/material.h
     utils/materials/cartoon.h
     utils/materials/phong.h
+    utils/materials/uvSphere.h
     utils/object.h
     utils/object_loader.h
     utils/objects/aabb.h
