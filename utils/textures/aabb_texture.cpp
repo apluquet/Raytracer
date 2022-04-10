@@ -26,7 +26,11 @@ Color AABBTexture::get(const Intersection &intersection, const Scene &scene,
             (object->max_vertex.y - object->min_vertex.y) * (side->width - 1);
     int v = (intersection.point.z - object->min_vertex.z) /
             (object->max_vertex.z - object->min_vertex.z) * (side->height - 1);
-    return side->get_pixel(side->height - 1 - v, u);
+
+    if (intersection.normal == object->normal_x_pos)
+      return side->get_pixel(side->height - 1 - v, u);
+    else
+      return side->get_pixel(side->height - 1 - v, side->width - 1 - u);
   } else if (intersection.normal == object->normal_y_neg ||
              intersection.normal == object->normal_y_pos) {
     return Color(1, 0, 0);

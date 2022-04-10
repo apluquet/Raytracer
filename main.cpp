@@ -63,8 +63,8 @@ int main(int argc, char* argv[]) {
   Image image(1920 / 2, 1080 / 2);
   // Camera camera(Point(3.56, 1.67, 3.87), image, Vector(0, -1, 0),
   // Vector(0, 0, 1), 1, 60, 45);
-  Camera camera(Point(3, 3, 3), image, Vector(-1, -1, -1).normalize(),
-                Vector(-1, -1, 1).normalize(), 1, 60, 45);
+  Camera camera(Point(-3, -3, 3), image, Vector(1, 1, -1).normalize(),
+                Vector(1, 1, 1).normalize(), 1, 60, 45);
   Scene scene(camera, 1.5, Color(0., 0., 0.));
   scene.addLight(&light);
   // scene.addObject(&aabb);
