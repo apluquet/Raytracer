@@ -37,18 +37,15 @@ void Image::from_png(std::string path) {
   int widthPNG, heightPNG, bpp;
   uint8_t* rgb_image = stbi_load(path.c_str(), &widthPNG, &heightPNG, &bpp, 3);
 
-  if (height != width)
-    std::invalid_argument("Image should have same height and width\n");
-
   height = heightPNG;
   width = widthPNG;
 
   for (int i = 0; i < height; i++) {
     std::vector<Color> line;
     for (int j = 0; j < width * 3; j += 3) {
-      Color color(static_cast<float>(rgb_image[i * width + j]) / 255,
-                  static_cast<float>(rgb_image[i * width + j + 1]) / 255,
-                  static_cast<float>(rgb_image[i * width + j + 2]) / 255);
+      Color color(static_cast<double>(rgb_image[i * width + j]) / 255,
+                  static_cast<double>(rgb_image[i * width + j + 1]) / 255,
+                  static_cast<double>(rgb_image[i * width + j + 2]) / 255);
       line.push_back(color);
     }
     my_image.push_back(line);
