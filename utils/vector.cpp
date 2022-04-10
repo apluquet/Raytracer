@@ -11,7 +11,12 @@
 
 #include "utils/vector.h"
 
+#include <limits>
 #include <stdexcept>
+
+static bool almostEqual(double a, double b) {
+  return std::fabs(a - b) < std::numeric_limits<double>::epsilon();
+}
 
 Vector Vector::operator*(const double &value) const {
   double new_x = x * value;
@@ -53,7 +58,8 @@ Vector Vector::operator+(const Vector &other) const {
 }
 
 bool Vector::operator==(const Vector &other) const {
-  return (x == other.x && y == other.y && z == other.z);
+  return almostEqual(x, other.x) && almostEqual(y, other.y) &&
+         almostEqual(z, other.z);
 }
 
 Vector Vector::operator-() const { return Vector(-x, -y, -z); }
