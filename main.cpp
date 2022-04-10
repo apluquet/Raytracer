@@ -22,6 +22,7 @@
 #include "utils/point.h"
 #include "utils/ray.h"
 #include "utils/scene.h"
+#include "utils/textures/aabb_texture.h"
 #include "utils/vector.h"
 
 extern "C" {
@@ -34,12 +35,27 @@ int main(int argc, char* argv[]) {
   Color red(1., 0., 0.);
   PhongMaterial phong_material(red, 0.2, 0.5, 0.3, 100);
 
+  std::shared_ptr<Image> top = std::make_shared<Image>(
+      "/home/dreamexe/Documents/Epita/S8/ISIM/raytracing-tp/scenes/"
+      "minecraft_textures/default_pack_1.8/"
+      "assets/minecraft/textures/blocks/tnt_top.png");
+  std::shared_ptr<Image> side = std::make_shared<Image>(
+      "/home/dreamexe/Documents/Epita/S8/ISIM/raytracing-tp/scenes/"
+      "minecraft_textures/default_pack_1.8/"
+      "assets/minecraft/textures/blocks/tnt_side.png");
+  std::shared_ptr<Image> bottom = std::make_shared<Image>(
+      "/home/dreamexe/Documents/Epita/S8/ISIM/raytracing-tp/scenes/"
+      "minecraft_textures/default_pack_1.8/"
+      "assets/minecraft/textures/blocks/tnt_bottom.png");
+
+  AABBTexture tnt_texture(top, side, bottom);
+
   // Get object from .obj
   std::vector<std::string> files(argv + 1, argv + argc);
-  std::vector<Object*> objects = object_loader(files, &phong_material);
+  // std::vector<Object*> objects = object_loader(files, &phong_material);
 
   // Create AABB object
-  // AABB aabb(Point(0, 0, 0), Point(1, 1, 1), &phong_material);
+  AABB aabb(Point(0, 0, 0), Point(1, 1, 1), &tnt_texture);
 
   // Create scene (camera + light)
   // PointLight light(Point(4.1, -4.32, 3.36), Color(1., 1., 1.), 1);
@@ -53,7 +69,8 @@ int main(int argc, char* argv[]) {
   scene.addLight(&light);
   // scene.addObject(&aabb);
 
-  for (Object* object : objects) scene.addObject(object);
+  // for (Object* object : objects) scene.addObject(object);
+  scene.addObject(&aabb);
 
   scene.render(false);
   scene.camera.image.to_ppm();
