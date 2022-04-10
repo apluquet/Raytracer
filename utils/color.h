@@ -69,9 +69,9 @@ class Color {
                  std::min(blue * value, COLOR_MAX));
   }
 
-  Color operator==(const Color &other) const {
-    return Color(almostEqual(red, other.red), almostEqual(green, other.green),
-                 almostEqual(blue, other.blue));
+  bool operator==(const Color &other) const {
+    return almostEqual(red, other.red) && almostEqual(green, other.green) &&
+           almostEqual(blue, other.blue);
   }
 
   int getRedInt() { return red * COLOR_INT_MAX; }
