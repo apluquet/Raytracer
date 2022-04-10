@@ -24,6 +24,11 @@
 #include "utils/scene.h"
 #include "utils/vector.h"
 
+extern "C" {
+#define STB_IMAGE_IMPLEMENTATION
+#include "utils/libs/stb_image.h"
+}
+
 int main(int argc, char* argv[]) {
   // Create materials
   Color red(1., 0., 0.);
