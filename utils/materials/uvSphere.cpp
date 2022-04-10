@@ -14,7 +14,7 @@
 #include <math.h>
 
 #include <cmath>
-
+#include <vector>
 #define PI 3.14159265
 
 // Returns the box for a generated checkered pattern
@@ -28,6 +28,13 @@ static bool getBox(double u, double v, int width, int height) {
   if (static_cast<int>(floor(v / height_box)) % 2 == 1) dark = !dark;
 
   return dark;
+}
+
+Color UVSphere::getPixel(double u, double v, int width, int height) {
+  u = floor(u * (width - 1));
+  v = floor(v * (height - 1));
+
+  return my_texture->get_pixel(v, u);
 }
 
 static Point flatten3Dpoint(const Point &point3D, const Point &center) {
@@ -50,19 +57,24 @@ static Point flatten3Dpoint(const Point &point3D, const Point &center) {
 
 Color UVSphere::get(const Intersection &intersection, const Scene &scene,
                     int reflection_index) {
-  Color one(52. / 255, 235. / 255, 158. / 255);
-  Color two(235. / 255, 232. / 255, 52. / 255);
-
   Point flat = flatten3Dpoint(intersection.point,
                               intersection.object->get_position()[0]);
 
-  if (getBox(flat.x, flat.y, 2000, 1000)) return one;
-  return two;
+  return getPixel(flat.x, flat.y, my_texture->width, my_texture->height);
 
-  /* std::cout << "___________________________________\n";
-  std::cout << getBox(0, 0, 2, 2) << std::endl;
-  std::cout << getBox(0.5, 0, 2, 2) << std::endl;
-  std::cout << getBox(0, 0.5, 2, 2) << std::endl;
-  std::cout << getBox(0.5, 0.5, 2, 2) << std::endl;
-  std::cout << getBox(1, 1, 2, 2) << std::endl; */
+  /*  CHECKERED SPHERE
+
+    Color one(52. / 255, 235. / 255, 158. / 255);
+    Color two(235. / 255, 232. / 255, 52. / 255);
+
+    if (getBox(flat.x, flat.y, 2000, 1000)) return one;
+    return two;
+
+    /* std::cout << "___________________________________\n";
+    std::cout << getBox(0, 0, 2, 2) << std::endl;
+    std::cout << getBox(0.5, 0, 2, 2) << std::endl;
+    std::cout << getBox(0, 0.5, 2, 2) << std::endl;
+    std::cout << getBox(0.5, 0.5, 2, 2) << std::endl;
+    std::cout << getBox(1, 1, 2, 2) << std::endl;
+  */
 }

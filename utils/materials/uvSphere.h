@@ -11,14 +11,20 @@
 
 #pragma once
 
-#include "utils/material.h"
+#include <memory>
 
+#include "utils/material.h"
 class UVSphere : public Texture_Material {
  public:
-  explicit UVSphere(const Image &my_texture) : my_texture(my_texture) {}
+  explicit UVSphere(std::shared_ptr<Image> my_texture)
+      : my_texture(my_texture) {}
 
   Color get(const Intersection &intersection, const Scene &scene,
             int reflection_index = 5);
 
-  Image my_texture;
+ private:
+  Color getPixel(double u, double v, int width, int height);
+
+ public:
+  std::shared_ptr<Image> my_texture;
 };
