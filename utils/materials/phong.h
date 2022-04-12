@@ -11,26 +11,28 @@
 
 #pragma once
 
+#include <memory>
+
 #include "utils/material.h"
 
-class PhongMaterial : public Texture_Material {
+class PhongMaterial : public Material {
  public:
-  explicit PhongMaterial(const Color &color, const double &ka, const double &kd,
-                         const double &ks, const double &alpha)
-      : color(color), ka(ka), kd(kd), ks(ks), alpha(alpha) {
+  explicit PhongMaterial(std::shared_ptr<Texture> texture, const double &ka,
+                         const double &kd, const double &ks,
+                         const double &alpha)
+      : texture(texture), ka(ka), kd(kd), ks(ks), alpha(alpha) {
     kr = 0;
   }
 
-  explicit PhongMaterial(const Color &color, const double &ka, const double &kd,
-                         const double &ks, const double &kr,
+  explicit PhongMaterial(std::shared_ptr<Texture> texture, const double &ka,
+                         const double &kd, const double &ks, const double &kr,
                          const double &alpha)
-      : color(color), ka(ka), kd(kd), ks(ks), kr(kr), alpha(alpha) {}
+      : ka(ka), kd(kd), ks(ks), kr(kr), alpha(alpha) {}
 
   Color get(const Intersection &intersection, const Scene &scene,
             int reflection_index = 5);
 
-  Color color;
-
+  std::shared_ptr<Texture> texture;
   double ka;     // Composante ambiante
   double kd;     // Composante diffuse
   double ks;     // Composante spéculaire
@@ -39,7 +41,7 @@ class PhongMaterial : public Texture_Material {
 
  private:
   Color get_reflection(const Intersection &intersection, const Scene &scene,
-                       int reflection_index);
+                       const Color &color, int reflection_index);
   Color get_diffuse_and_specular(const Intersection &intersection,
-                                 const Scene &scene);
+                                 const Scene &scene, const Color &color);
 };

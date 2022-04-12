@@ -11,12 +11,16 @@
 
 #include "utils/object_loader.h"
 
+#include <memory>
+
 #define TINYOBJLOADER_IMPLEMENTATION  // define this in only *one* .cc
 
 #include "tinyobjloader/tiny_obj_loader.h"
 #include "utils/materials/cartoon.h"
 #include "utils/materials/phong.h"
+#include "utils/materials/uniform_material.h"
 #include "utils/objects/triangle.h"
+#include "utils/textures/uniform_texture.h"
 
 #define KA 0.2
 #define KD 0.8
@@ -39,7 +43,7 @@ static void object_parser(const std::string& inputfile,
 }
 
 std::vector<Object*> object_loader(const std::vector<std::string>& files,
-                                   Texture_Material* material, char style) {
+                                   Material* material, char style) {
   std::vector<Object*> objects;
   int last_size = 0;
 
@@ -51,26 +55,28 @@ std::vector<Object*> object_loader(const std::vector<std::string>& files,
     auto& shapes = reader.GetShapes();
     auto& materials = reader.GetMaterials();
 
-    std::vector<Texture_Material*> our_materials;
+    std::vector<Material*> our_materials;
     if (material == nullptr) {
       for (size_t i = 0; i < materials.size(); i++) {
         Color color = Color(materials[i].diffuse[0], materials[i].diffuse[1],
                             materials[i].diffuse[2]);
+        std::shared_ptr<Texture> texture =
+            std::make_shared<UniformTexture>(color);
 
-        Texture_Material* material_ptr;
+        Material* material_ptr;
 
         switch (style) {
           case 'c':  // Cartoon
-            material_ptr =
-                new CartoonMaterial(color, KA, KD, KS, materials[i].shininess);
+            material_ptr = new CartoonMaterial(texture, KA, KD, KS,
+                                               materials[i].shininess);
             break;
           case 'p':  // Phong
-            material_ptr = new PhongMaterial(color, KA, KD, KS,
+            material_ptr = new PhongMaterial(texture, KA, KD, KS,
                                              materials[i].shininess / 1000,
                                              materials[i].shininess);
             break;
           case 'u':  // Uniform
-            material_ptr = new Uniform_Texture(color);
+            material_ptr = new UniformMaterial(texture);
             break;
           default:
             throw std::logic_error(

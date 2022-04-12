@@ -36,7 +36,7 @@
 
 class Scene;
 
-class Texture_Material {
+class Material {
  public:
   /**
    * @brief
@@ -49,16 +49,4 @@ class Texture_Material {
    */
   virtual Color get(const Intersection &intersection, const Scene &scene,
                     int reflection_index = 5) = 0;
-};
-
-class Uniform_Texture : public Texture_Material {
- public:
-  explicit Uniform_Texture(const Color &color) : color(color) {}
-
-  Color get(const Intersection &intersection, const Scene &scene,
-            int reflection_index = 5) {
-    return color;
-  }
-
-  Color color;
 };

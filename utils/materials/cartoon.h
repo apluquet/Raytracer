@@ -11,22 +11,29 @@
 
 #pragma once
 
+#include <memory>
+
 #include "utils/material.h"
 
-class CartoonMaterial : public Texture_Material {
+class CartoonMaterial : public Material {
  public:
-  explicit CartoonMaterial(const Color &color, const double &ka,
+  explicit CartoonMaterial(std::shared_ptr<Texture> texture, const double &ka,
                            const double &kd, const double &ks,
                            const double &alpha, int n_shades = 2)
-      : color(color), ka(ka), kd(kd), ks(ks), alpha(alpha), n_shades(n_shades) {
+      : texture(texture),
+        ka(ka),
+        kd(kd),
+        ks(ks),
+        alpha(alpha),
+        n_shades(n_shades) {
     kr = 0;
   }
 
-  explicit CartoonMaterial(const Color &color, const double &ka,
+  explicit CartoonMaterial(std::shared_ptr<Texture> texture, const double &ka,
                            const double &kd, const double &ks, const double &kr,
                            const double &alpha, int n_shades = 2,
                            const Color &outline_color = Color(0, 0, 0))
-      : color(color),
+      : texture(texture),
         ka(ka),
         kd(kd),
         ks(ks),
@@ -38,9 +45,9 @@ class CartoonMaterial : public Texture_Material {
   Color get(const Intersection &intersection, const Scene &scene,
             int reflection_index = 5);
 
-  Color color;
   Color outline_color;
 
+  std::shared_ptr<Texture> texture;
   double ka;     // Composante ambiante
   double kd;     // Composante diffuse
   double ks;     // Composante spéculaire
@@ -52,7 +59,7 @@ class CartoonMaterial : public Texture_Material {
   Color get_reflection(const Intersection &intersection, const Scene &scene,
                        int reflection_index);
   Color get_diffuse_and_specular(const Intersection &intersection,
-                                 const Scene &scene);
+                                 const Scene &scene, const Color &color);
   std::optional<Color> get_outline(const Intersection &intersection,
                                    const Scene &scene);
 };

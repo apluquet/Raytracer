@@ -16,7 +16,7 @@
 #include "utils/image.h"
 #include "utils/material.h"
 
-class AABBTexture : public Texture_Material {
+class AABBTexture : public Texture {
  public:
   AABBTexture(std::shared_ptr<Image> top, std::shared_ptr<Image> side,
               std::shared_ptr<Image> bottom)

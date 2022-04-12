@@ -46,7 +46,9 @@ set(HEADERS
     utils/point.h 
     utils/ray.h
     utils/scene.h
+    utils/texture.h
     utils/textures/aabb_texture.h
+    utils/textures/uniform_texture.h
     utils/vector.h
     )
 
