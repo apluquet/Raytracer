@@ -17,6 +17,10 @@
 #include "utils/point.h"
 #include "utils/ray.h"
 
+/**
+ * @brief Axis Aligned Bonding Box (AABB).
+ *
+ */
 class AABB : public Object {
  public:
   AABB() {}
