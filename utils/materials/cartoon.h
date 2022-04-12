@@ -1,5 +1,5 @@
 /**
- * @file phong.h
+ * @file cartoon.h
  * @author Adèle PLUQUET and Adrien ANTON LUDWIG
  * @brief Cartoon material class.
  * @version 0.1
