@@ -15,6 +15,7 @@ set(SRCS
     utils/camera.cpp
     utils/image.cpp
     utils/materials/cartoon.cpp
+    utils/materials/checkeredSphere.cpp
     utils/materials/phong.cpp
     utils/materials/uvSphere.cpp
     utils/object_loader.cpp
@@ -37,7 +38,9 @@ set(HEADERS
     utils/light.h
     utils/material.h
     utils/materials/cartoon.h
+    utils/materials/checkeredSphere.h
     utils/materials/phong.h
+    utils/materials/sphereUtils.h
     utils/materials/uvSphere.h
     utils/object.h
     utils/object_loader.h

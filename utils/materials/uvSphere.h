@@ -1,5 +1,5 @@
 /**
- * @file phong.cpp
+ * @file uvSphere.h
  * @author Adèle PLUQUET and Adrien ANTON LUDWIG
  * @brief Texture mapping material class implementation.
  * @version 0.1
