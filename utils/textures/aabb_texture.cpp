@@ -28,9 +28,9 @@ Color AABBTexture::get(const Intersection &intersection, const Scene &scene,
             (object->max_vertex.z - object->min_vertex.z) * (side->height - 1);
 
     if (intersection.normal == object->normal_x_neg)  // X min
-      return side->get_pixel(side->height - 1 - v, side->width - 1 - u);
+      return side->get_pixel(side->width - 1 - u, v);
     else  // X max
-      return side->get_pixel(side->height - 1 - v, u);
+      return side->get_pixel(u, v);
   } else if (intersection.normal == object->normal_y_neg ||
              intersection.normal == object->normal_y_pos) {  // Y sides
     int u = (intersection.point.x - object->min_vertex.x) /
@@ -39,16 +39,16 @@ Color AABBTexture::get(const Intersection &intersection, const Scene &scene,
             (object->max_vertex.z - object->min_vertex.z) * (side->height - 1);
 
     if (intersection.normal == object->normal_y_neg)  // Y min
-      return side->get_pixel(side->height - 1 - v, u);
+      return side->get_pixel(u, v);
     else  // Y max
-      return side->get_pixel(side->height - 1 - v, side->width - 1 - u);
+      return side->get_pixel(side->width - 1 - u, v);
   } else if (intersection.normal == object->normal_z_pos) {  // Z top (== Z max)
     int u = (intersection.point.x - object->min_vertex.x) /
             (object->max_vertex.x - object->min_vertex.x) * (top->width - 1);
     int v = (intersection.point.y - object->min_vertex.y) /
             (object->max_vertex.y - object->min_vertex.y) * (top->height - 1);
 
-    return top->get_pixel(side->height - 1 - v, u);
+    return top->get_pixel(u, v);
   } else if (intersection.normal ==
              object->normal_z_neg) {  // Z bottom (== Z min)
     int u = (intersection.point.x - object->min_vertex.x) /
@@ -57,7 +57,7 @@ Color AABBTexture::get(const Intersection &intersection, const Scene &scene,
             (object->max_vertex.y - object->min_vertex.y) *
             (bottom->height - 1);
 
-    return bottom->get_pixel(side->height - 1 - v, side->width - 1 - u);
+    return bottom->get_pixel(side->width - 1 - u, v);
   } else {
     // If we arrived here there is a problem.
     // 1) The operator == between Vectors (doubles) may be the problem.
