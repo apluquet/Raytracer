@@ -18,7 +18,7 @@
 
 class Intersection;
 class Object;
-class Texture_Material;
+class Material;
 
 class Scene {
  public:

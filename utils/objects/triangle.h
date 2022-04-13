@@ -20,8 +20,7 @@
 
 class Triangle : public Object {
  public:
-  Triangle(const Point &A, const Point &B, const Point &C,
-           Texture_Material *material)
+  Triangle(const Point &A, const Point &B, const Point &C, Material *material)
       : A(A), B(B), C(C), material(material) {
     // Computed hard normal, triangle is flat
     Vector AB = B - A;
@@ -33,7 +32,7 @@ class Triangle : public Object {
 
   Triangle(const Point &A, const Point &B, const Point &C,
            const Vector &normal_A, const Vector &normal_B,
-           const Vector &normal_C, Texture_Material *material)
+           const Vector &normal_C, Material *material)
       : A(A),
         B(B),
         C(C),
@@ -44,7 +43,7 @@ class Triangle : public Object {
 
   std::optional<Intersection> intersect(const Ray &ray) override;
   Vector normal(const Point &point) override;
-  Texture_Material *get_material() override;
+  Material *get_material() override;
   double get_potential(const Point &point) override;
 
   std::vector<Point> get_position() override;
@@ -52,7 +51,7 @@ class Triangle : public Object {
   Point A;
   Point B;
   Point C;
-  Texture_Material *material;
+  Material *material;
   Vector normal_A;
   Vector normal_B;
   Vector normal_C;

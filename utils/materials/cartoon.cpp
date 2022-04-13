@@ -42,7 +42,7 @@ std::optional<Color> CartoonMaterial::get_outline(
 }
 
 Color CartoonMaterial::get_diffuse_and_specular(
-    const Intersection &intersection, const Scene &scene) {
+    const Intersection &intersection, const Scene &scene, const Color &color) {
   Vector light_vector;
   Vector light_direction;
   Vector light_reflection;
@@ -106,11 +106,13 @@ Color CartoonMaterial::get_diffuse_and_specular(
 
 Color CartoonMaterial::get(const Intersection &intersection, const Scene &scene,
                            int reflection_index) {
+  Color color = texture->get(intersection, scene);
+
   // AMBIENT
   Color ambient = color * scene.ambientIntensity * ka;
 
   std::optional<Color> outline = get_outline(intersection, scene);
   if (outline.has_value()) return outline.value();
-  return ambient + get_diffuse_and_specular(intersection, scene) +
+  return ambient + get_diffuse_and_specular(intersection, scene, color) +
          get_reflection(intersection, scene, reflection_index);
 }

@@ -24,6 +24,7 @@ set(SRCS
     utils/objects/triangle.cpp
     utils/ray.cpp
     utils/scene.cpp
+    utils/textures/aabb_texture.cpp
     utils/vector.cpp
     )
     
@@ -50,6 +51,9 @@ set(HEADERS
     utils/point.h 
     utils/ray.h
     utils/scene.h
+    utils/texture.h
+    utils/textures/aabb_texture.h
+    utils/textures/uniform_texture.h
     utils/vector.h
     )
 

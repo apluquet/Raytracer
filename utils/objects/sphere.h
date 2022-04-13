@@ -20,17 +20,17 @@
 
 class Sphere : public Object {
  public:
-  Sphere(const Point &center, const double &radius, Texture_Material *material)
+  Sphere(const Point &center, const double &radius, Material *material)
       : center(center), radius(radius), material(material) {}
 
   std::optional<Intersection> intersect(const Ray &ray) override;
   Vector normal(const Point &point) override;
-  Texture_Material *get_material() override;
+  Material *get_material() override;
   double get_potential(const Point &point) override;
 
   std::vector<Point> get_position() override;
 
   Point center;
   double radius;
-  Texture_Material *material;
+  Material *material;
 };

@@ -99,7 +99,7 @@ Vector AABB::normal(const Point &point) {
   throw std::logic_error("Should not be used.");
 }
 
-Texture_Material *AABB::get_material() { return material; }
+Material *AABB::get_material() { return material; }
 
 double AABB::get_potential(const Point &point) {
   throw std::logic_error("Not implemented yet.");

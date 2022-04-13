@@ -11,12 +11,14 @@
 
 #pragma once
 
+#include <memory>
 #include <vector>
 
 #include "utils/color.h"
 #include "utils/materials/phong.h"
 #include "utils/objects/triangle.h"
 #include "utils/point.h"
+#include "utils/textures/uniform_texture.h"
 
 class Blob {
  public:
@@ -104,8 +106,10 @@ z
   std::vector<Vector> vertices;
   std::vector<Vector> edges;
 
+  std::shared_ptr<Texture> default_texture =
+      std::make_shared<UniformTexture>(Color(1., 0., 0.));
   PhongMaterial *default_material =
-      new PhongMaterial(Color(1., 0., 0.), 0.2, 0.5, 0.3, 150);
+      new PhongMaterial(default_texture, 0.2, 0.5, 0.3, 150);
 
   int powers[8] = {1, 2, 4, 8, 16, 32, 64, 128};
   int edges_list[256][15] = {

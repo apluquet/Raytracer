@@ -14,7 +14,8 @@
 #include "utils/scene.h"
 
 Color PhongMaterial::get_reflection(const Intersection &intersection,
-                                    const Scene &scene, int reflection_index) {
+                                    const Scene &scene, const Color &color,
+                                    int reflection_index) {
   Color reflection_color;
   if (reflection_index > 0 && kr > 0.0001) {
     // R = I - 2(N.I)N
@@ -43,7 +44,8 @@ Color PhongMaterial::get_reflection(const Intersection &intersection,
 }
 
 Color PhongMaterial::get_diffuse_and_specular(const Intersection &intersection,
-                                              const Scene &scene) {
+                                              const Scene &scene,
+                                              const Color &color) {
   Vector light_vector;
   Vector light_direction;
   Vector light_reflection;
@@ -95,9 +97,11 @@ Color PhongMaterial::get_diffuse_and_specular(const Intersection &intersection,
 
 Color PhongMaterial::get(const Intersection &intersection, const Scene &scene,
                          int reflection_index) {
+  Color color = texture->get(intersection, scene);
+
   // AMBIENT
   Color ambient = color * scene.ambientIntensity * ka;
 
-  return ambient + get_diffuse_and_specular(intersection, scene) +
-         get_reflection(intersection, scene, reflection_index);
+  return ambient + get_diffuse_and_specular(intersection, scene, color) +
+         get_reflection(intersection, scene, color, reflection_index);
 }

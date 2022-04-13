@@ -82,7 +82,7 @@ Vector Triangle::normal(const Point &point) {
   return normal;
 }
 
-Texture_Material *Triangle::get_material() { return material; }
+Material *Triangle::get_material() { return material; }
 
 double Triangle::get_potential(const Point &point) { return 0; }
 

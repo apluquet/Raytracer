@@ -59,7 +59,7 @@ std::optional<Intersection> Sphere::intersect(const Ray &ray) {
 
 Vector Sphere::normal(const Point &point) { return point - center; }
 
-Texture_Material *Sphere::get_material() { return material; }
+Material *Sphere::get_material() { return material; }
 
 double Sphere::get_potential(const Point &point) {
   return (point - center).length() < radius;

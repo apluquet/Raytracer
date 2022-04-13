@@ -18,6 +18,7 @@
 #include "utils/material.h"
 #include "utils/ray.h"
 #include "utils/scene.h"
+#include "utils/texture.h"
 #include "utils/vector.h"
 
 /*
@@ -43,10 +44,8 @@ class Object {
  public:
   virtual std::optional<Intersection> intersect(const Ray &ray) = 0;
   virtual Vector normal(const Point &point) = 0;
-  virtual Texture_Material *get_material() = 0;
+  virtual Material *get_material() = 0;
   virtual double get_potential(const Point &point) = 0;
 
   virtual std::vector<Point> get_position() = 0;
-
-  Texture_Material *material;
 };

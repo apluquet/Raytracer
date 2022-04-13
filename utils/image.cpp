@@ -34,7 +34,7 @@ Color Image::get_pixel(int x, int y) {
   if (x >= width || y >= height)
     throw std::invalid_argument("Index out of bounds\n");
   // X column and Y the row
-  return my_image[height - y][x];
+  return my_image[height - 1 - y][x];
 }
 
 void Image::from_png(std::string path) {
