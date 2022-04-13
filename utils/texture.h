@@ -31,6 +31,5 @@ class Texture {
    * @param scene : The scene object containing every object and light.
    * @return Color
    */
-  virtual Color get(const Intersection &intersection, const Scene &scene,
-                    int reflection_index = 5) = 0;
+  virtual Color get(const Intersection &intersection, const Scene &scene) = 0;
 };

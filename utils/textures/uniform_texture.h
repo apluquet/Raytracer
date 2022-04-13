@@ -17,8 +17,7 @@ class UniformTexture : public Texture {
  public:
   explicit UniformTexture(const Color &color) : color(color) {}
 
-  Color get(const Intersection &intersection, const Scene &scene,
-            int reflection_index = 5) {
+  Color get(const Intersection &intersection, const Scene &scene) {
     return color;
   }
 

@@ -22,8 +22,7 @@ class AABBTexture : public Texture {
               std::shared_ptr<Image> bottom)
       : top(top), side(side), bottom(bottom) {}
 
-  Color get(const Intersection &intersection, const Scene &scene,
-            int reflection_index = 5) override;
+  Color get(const Intersection &intersection, const Scene &scene) override;
 
   std::shared_ptr<Image> top;
   std::shared_ptr<Image> side;

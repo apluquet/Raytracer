@@ -13,8 +13,7 @@
 
 #include "utils/objects/aabb.h"
 
-Color AABBTexture::get(const Intersection &intersection, const Scene &scene,
-                       int reflection_index) {
+Color AABBTexture::get(const Intersection &intersection, const Scene &scene) {
   AABB *object = dynamic_cast<AABB *>(intersection.object);
 
   if (!object)
