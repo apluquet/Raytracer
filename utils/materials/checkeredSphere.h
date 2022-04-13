@@ -13,7 +13,7 @@
 
 #include "utils/material.h"
 
-class CheckeredSphere : public Texture_Material {
+class CheckeredSphere : public Texture {
  public:
   explicit CheckeredSphere(int precision, const Color &one, const Color &two)
       : precision(precision), one(one), two(two) {

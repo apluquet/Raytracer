@@ -14,7 +14,7 @@
 #include <memory>
 
 #include "utils/material.h"
-class UVSphere : public Texture_Material {
+class UVSphere : public Texture {
  public:
   explicit UVSphere(std::shared_ptr<Image> my_texture)
       : my_texture(my_texture) {}
