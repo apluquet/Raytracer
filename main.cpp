@@ -16,6 +16,7 @@
 #include "utils/image.h"
 #include "utils/materials/cartoon.h"
 #include "utils/materials/phong.h"
+#include "utils/materials/uvSphere.h"
 #include "utils/object_loader.h"
 #include "utils/objects/aabb.h"
 #include "utils/objects/sphere.h"
@@ -32,6 +33,17 @@ extern "C" {
 }
 
 int main(int argc, char* argv[]) {
+  /* UV Sphere from texture mapping
+    Point center = Point(0, 0, 0);
+
+    double radius = 0.5;
+    std::shared_ptr<Image> text_image = std::make_shared<Image>(argv[1]);
+    UVSphere sphere_material = UVSphere(text_image);
+    Sphere sphere(center, radius, &sphere_material);
+    ...
+    scene.addObject(sphere);
+    */
+
   // Create materials
   Color red(1., 0., 0.);
 

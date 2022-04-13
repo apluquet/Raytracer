@@ -1,5 +1,5 @@
 /**
- * @file phong.cpp
+ * @file cartoon.cpp
  * @author Adèle PLUQUET and Adrien ANTON LUDWIG
  * @brief Cartoon material class implementation.
  * @version 0.1
