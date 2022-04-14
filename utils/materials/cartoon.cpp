@@ -89,17 +89,18 @@ Color CartoonMaterial::get_diffuse_and_specular(
                               pow(cos_omega, alpha) * ks;
   }
 
-  // Returns a white color
+  // double color_mean = (diffuse.red + diffuse.green + diffuse.blue) / 3;
+
+  // Returns a white color if specular is strong
   if (specular.red + specular.green + specular.blue > 0.3)
     return Color(1, 1, 1);
 
-  // double color_mean = (diffuse.red + diffuse.green + diffuse.blue) / 3;
-  double color_mean =
+  double color_max =
       std::max(diffuse.red, std::max(diffuse.blue, diffuse.green));
   // Computes the color with the number of shades
   double step = 1. / n_shades;
   for (int i = 1; i < n_shades; i++) {
-    if (color_mean < (i * step / 7)) return color * Color(1, 1, 1) * (i * step);
+    if (color_max < (i * step / 7)) return color * Color(1, 1, 1) * (i * step);
   }
   return color;
 }
@@ -107,12 +108,10 @@ Color CartoonMaterial::get_diffuse_and_specular(
 Color CartoonMaterial::get(const Intersection &intersection, const Scene &scene,
                            int reflection_index) {
   Color color = texture->get(intersection, scene);
-
-  // AMBIENT
   Color ambient = color * scene.ambientIntensity * ka;
 
   std::optional<Color> outline = get_outline(intersection, scene);
   if (outline.has_value()) return outline.value();
-  return ambient + get_diffuse_and_specular(intersection, scene, color) +
-         get_reflection(intersection, scene, reflection_index);
+
+  return ambient + get_diffuse_and_specular(intersection, scene, color);
 }
