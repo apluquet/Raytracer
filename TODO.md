@@ -12,5 +12,6 @@ Obj and scene boundaries
 Free
 Change FOV compute to avoid distorted image
 KD trees
+FBM texture procedural generation
 
 Update README
