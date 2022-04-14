@@ -27,7 +27,7 @@ class PhongMaterial : public Material {
   explicit PhongMaterial(std::shared_ptr<Texture> texture, const double &ka,
                          const double &kd, const double &ks, const double &kr,
                          const double &alpha)
-      : ka(ka), kd(kd), ks(ks), kr(kr), alpha(alpha) {}
+      : texture(texture), ka(ka), kd(kd), ks(ks), kr(kr), alpha(alpha) {}
 
   Color get(const Intersection &intersection, const Scene &scene,
             int reflection_index = 5);
