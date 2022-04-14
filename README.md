@@ -1,6 +1,6 @@
 # Raytracer
 
-A ratracer realized in the framework of this course.
+A ratracer realized in the framework of the course [Introduction at image synthesis](http://jo.fabrizio.free.fr/teaching/synt/index.php) by [Jonathan FABRIZIO](http://jo.fabrizio.free.fr/) at [EPITA](https://www.epita.fr/).
 
 ## Realizations
 
