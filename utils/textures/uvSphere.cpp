@@ -22,7 +22,7 @@ Color UVSphere::getPixel(double u, double v, int width, int height) {
   u = floor(u * (width - 1));
   v = floor(v * (height - 1));
 
-  return my_texture->get_pixel(v, u);
+  return my_texture->get_pixel(u, v);
 }
 
 Color UVSphere::get(const Intersection &intersection, const Scene &scene) {
