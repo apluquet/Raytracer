@@ -24,10 +24,10 @@ See TODO.md for further improvement ideas.
 ## Usage
 
 ```
-$ mkdir build && cd build`
-$ cmake ..`
-$ make -j`
-$ ./raytracer` 
+$ mkdir build && cd build
+$ cmake ..
+$ make -j
+$ ./raytracer
 ```
 
 And follow the USAGE message.
