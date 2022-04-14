@@ -21,8 +21,7 @@ class CheckeredSphere : public Texture {
     heightBox = 1. / (2 * precision);
   }
 
-  Color get(const Intersection &intersection, const Scene &scene,
-            int reflection_index = 5);
+  Color get(const Intersection &intersection, const Scene &scene);
 
  private:
   bool getBox(double u, double v);

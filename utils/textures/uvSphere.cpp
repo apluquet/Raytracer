@@ -25,8 +25,7 @@ Color UVSphere::getPixel(double u, double v, int width, int height) {
   return my_texture->get_pixel(v, u);
 }
 
-Color UVSphere::get(const Intersection &intersection, const Scene &scene,
-                    int reflection_index) {
+Color UVSphere::get(const Intersection &intersection, const Scene &scene) {
   Point flat = flatten3Dpoint(intersection.point,
                               intersection.object->get_position()[0]);
 

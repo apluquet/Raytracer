@@ -28,8 +28,8 @@ bool CheckeredSphere::getBox(double u, double v) {
   return dark;
 }
 
-Color CheckeredSphere::get(const Intersection &intersection, const Scene &scene,
-                           int reflection_index) {
+Color CheckeredSphere::get(const Intersection &intersection,
+                           const Scene &scene) {
   Point flat = flatten3Dpoint(intersection.point,
                               intersection.object->get_position()[0]);
 

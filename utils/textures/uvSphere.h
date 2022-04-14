@@ -19,8 +19,7 @@ class UVSphere : public Texture {
   explicit UVSphere(std::shared_ptr<Image> my_texture)
       : my_texture(my_texture) {}
 
-  Color get(const Intersection &intersection, const Scene &scene,
-            int reflection_index = 5);
+  Color get(const Intersection &intersection, const Scene &scene);
 
  private:
   Color getPixel(double u, double v, int width, int height);
