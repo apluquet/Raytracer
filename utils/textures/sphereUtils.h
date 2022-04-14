@@ -26,10 +26,10 @@ inline Point flatten3Dpoint(const Point &point3D, const Point &center) {
   double radius = vec.length();
 
   // Azimuthal angle increasing clockwise
-  double theta = atan2(vec.x, vec.z);
+  double theta = atan2(vec.x, vec.y);
 
   // Polar angle
-  double phi = acos(vec.y / radius);
+  double phi = acos(vec.z / radius);
 
   double raw_u = theta / (2 * PI);
   double u = 1 - (raw_u + 0.5);

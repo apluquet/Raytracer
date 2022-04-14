@@ -9,14 +9,14 @@
  *
  */
 
-#include "utils/materials/uvSphere.h"
+#include "utils/textures/uvSphere.h"
 
 #include <math.h>
 
 #include <cmath>
 #include <vector>
 
-#include "utils/materials/sphereUtils.h"
+#include "utils/textures/sphereUtils.h"
 
 Color UVSphere::getPixel(double u, double v, int width, int height) {
   u = floor(u * (width - 1));
@@ -27,9 +27,8 @@ Color UVSphere::getPixel(double u, double v, int width, int height) {
 
 Color UVSphere::get(const Intersection &intersection, const Scene &scene,
                     int reflection_index) {
-  // Point flat = flatten3Dpoint(intersection.point,
-  //                            intersection.object->get_position()[0]);
+  Point flat = flatten3Dpoint(intersection.point,
+                              intersection.object->get_position()[0]);
 
-  // return getPixel(flat.x, flat.y, my_texture->width, my_texture->height);
-  return Color(0, 0, 0);
+  return getPixel(flat.x, flat.y, my_texture->width, my_texture->height);
 }

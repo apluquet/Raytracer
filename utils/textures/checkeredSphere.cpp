@@ -9,14 +9,14 @@
  *
  */
 
-#include "utils/materials/checkeredSphere.h"
+#include "utils/textures/checkeredSphere.h"
 
 #include <math.h>
 
 #include <cmath>
 #include <vector>
 
-#include "utils/materials/sphereUtils.h"
+#include "utils/textures/sphereUtils.h"
 
 // Returns the box for a generated checkered pattern
 bool CheckeredSphere::getBox(double u, double v) {
