@@ -10,13 +10,14 @@
  */
 #include "utils/image.h"
 
+#include <iomanip>
 #include <iostream>
 
 #define RGB_DEPTH 3
 
-void Image::to_ppm() {
+void Image::to_ppm(std::string filename, bool logging) {
   {
-    std::ofstream ofs("my_image.ppm", std::ofstream::out);
+    std::ofstream ofs(filename + ".ppm", std::ofstream::out);
     ofs << "P3 " << width << " " << height << " 255" << std::endl;
     for (std::size_t i = 0; i < height; i++) {
       for (std::size_t j = 0; j < width; j++)
@@ -27,7 +28,7 @@ void Image::to_ppm() {
     ofs.close();
   }
 
-  std::cout << "Write image : success !" << std::endl;
+  if (logging) std::cout << "Write " << filename << " : success !" << std::endl;
 }
 
 Color Image::get_pixel(int x, int y) {
@@ -39,7 +40,7 @@ Color Image::get_pixel(int x, int y) {
 
 void Image::from_png(std::string path) {
   int widthPNG, heightPNG, bpp;
-  uint8_t* rgb_image =
+  uint8_t *rgb_image =
       stbi_load(path.c_str(), &widthPNG, &heightPNG, &bpp, RGB_DEPTH);
 
   if (rgb_image == nullptr || widthPNG == 0 || heightPNG == 0)

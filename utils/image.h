@@ -28,7 +28,7 @@ class Image {
   explicit Image(std::string path) { from_png(path); }
 
   // Enregistre l'image au format ppm
-  void to_ppm();
+  void to_ppm(std::string filename, bool logging = true);
 
   // Récupère un pixel de notre image
   Color get_pixel(int x, int y);
